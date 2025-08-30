@@ -33,10 +33,7 @@ const routes: Routes = [
     - Faster
     - add <router-outlet> in app.component.html — otherwise, lazy-loaded components won’t display.
 ## Angular Pipe
-- Pass param like
-```html
-<div>{{ name | truncate : 5 }}</div>
-```
+- Create pipe as 
 ```typescript
 @Pipe({
    name: 'truncate'
@@ -48,6 +45,10 @@ export class TruncatePipe implements PipeTransform {
       return value.substring(0, args )+ "...";
    }
 }
+```
+- Pass param like
+```html
+<div>{{ name | truncate : 5 }}</div>
 ```
 ### Pure and Impure Pipes
 1. Pure
