@@ -33,7 +33,10 @@ const routes: Routes = [
     - Faster
     - add <router-outlet> in app.component.html — otherwise, lazy-loaded components won’t display.
 ## Angular Pipe
-- Pass param like `<div>{{ name | truncate : 5 }}</div>`
+- Pass param like
+   ```html
+      <div>{{ name | truncate : 5 }}</div>
+   ```
 ```typescript
 @Pipe({
    name: 'truncate'
