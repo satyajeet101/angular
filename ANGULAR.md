@@ -1,4 +1,5 @@
-[CommonModule](#CommonModule) [Pure and Impure Pipes](#Pure and Impure Pipes)
+[CommonModule](#CommonModule) 
+[Pure and Impure Pipes](#Pure and Impure Pipes)
 
 ## Routing
 ```typescript
