@@ -1,14 +1,8 @@
-## Contents
-- [CommonModule](#commonmodule)
-- [Pipe](#pipe)
+# Contents
+[CommonModule](#CommonModule) | [Pipe](#Pipe) | [Routing](#Routing) | 
+[Lazy Load](#loadComponent-Vs-loadChildren) | [Service](#Service) | [Dropdown](#Dropdown) | 
+[Routing](#Routing) | [Lazy Load](#loadComponent-Vs-loadChildren)
 
-<details open>
-  <summary><strong>Contents</strong></summary>
-
-- [CommonModule](#commonmodule)
-- [Pipe](#pipe)
-
-</details>
 
 ## Routing
 ```typescript
@@ -34,7 +28,7 @@ const routes: Routes = [
 - You must import it in feature modules.
 - It makes *ngIf, *ngFor, ngSwitch, ngClass, etc., work.
 
-## loadComponent Vs loadChildren
+## loadComponent-Vs-loadChildren
 1. loadChildren, old style
     - Module level
     - Only if using feature modules
