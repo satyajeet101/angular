@@ -1,7 +1,7 @@
 # Contents
 [CommonModule](#CommonModule) | [Pipe](#Pipe) | [Routing](#Routing) | 
 [Lazy Load](#loadComponent-Vs-loadChildren) | [Service](#Service) | [Dropdown](#Dropdown) | 
-[Routing](#Routing) | [Lazy Load](#loadComponent-Vs-loadChildren)
+[Search](#Search) | [Lazy Load](#loadComponent-Vs-loadChildren)
 
 
 ## Routing
@@ -103,4 +103,32 @@ export class MyApiService {
 ```
 ```Typescript
 selectedType = 'users'; // default value
+```
+
+## Search
+```html
+  <input type="text" placeholder="Enter name to filter" [formControl]= "searchByName" />
+```
+```Typescript
+  searchByName = new FormControl('');
+  filterdUsers: User[] = [];
+  
+  ngOnInit() {
+    this.searchByName
+       .valueChanges
+       .pipe(debounceTime(500))
+       .subscribe((text) => {
+         this.getFilteredUser(text);
+       });
+  }
+  
+ getFilteredUser(filterText: string) {
+       if (!filterText.trim()) {
+         this.filterdUsers = this.users;
+       } else {
+         this.filterdUsers = this.users.filter((u) =>
+           u.name.toLowerCase().includes(filterText.toLowerCase())
+         );
+       }
+  }
 ```
