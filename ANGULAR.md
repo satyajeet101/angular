@@ -1,7 +1,7 @@
 # Contents
 [CommonModule](#CommonModule) | [Pipe](#Pipe) | [Routing](#Routing) | 
 [Lazy Load](#loadComponent-Vs-loadChildren) | [Service](#Service) | [Dropdown](#Dropdown) | 
-[Search](#Search) | [Lazy Load](#loadComponent-Vs-loadChildren)
+[Search](#Search)
 
 
 ## Routing
