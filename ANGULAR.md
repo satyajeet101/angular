@@ -34,9 +34,9 @@ const routes: Routes = [
     - add <router-outlet> in app.component.html — otherwise, lazy-loaded components won’t display.
 ## Angular Pipe
 - Pass param like
-   ```html
-      <div>{{ name | truncate : 5 }}</div>
-   ```
+```html
+<div>{{ name | truncate : 5 }}</div>
+```
 ```typescript
 @Pipe({
    name: 'truncate'
