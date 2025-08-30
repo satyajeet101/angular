@@ -1,20 +1,14 @@
-<div style="
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background-color: #f8f9fa;
-    padding: 10px 15px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    font-size: 14px;
-    z-index: 1000;
-    width: 180px;
-">
-  <h3 style="margin-top: 0; font-size: 16px;">Contents</h3>
-  <a href="#CommonModule" style="display: block; text-decoration: none; margin: 5px 0;">CommonModule</a>
-  <a href="#Pipe" style="display: block; text-decoration: none; margin: 5px 0;">Pipe</a>
-</div>
+## Contents
+- [CommonModule](#commonmodule)
+- [Pipe](#pipe)
+
+<details open>
+  <summary><strong>Contents</strong></summary>
+
+- [CommonModule](#commonmodule)
+- [Pipe](#pipe)
+
+</details>
 
 ## Routing
 ```typescript
