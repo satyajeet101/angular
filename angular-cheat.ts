@@ -18,6 +18,7 @@ constructor(private fb: FormBuilder, private userService: UserService) {}
       <small *ngIf="userForm.get('username')?.errors?.['minlength']">Must be at least 3 characters.</small>
     </div>
   </div>
+  <button type="submit" [disabled]="userForm.invalid">Submit</button>
 
    onSubmit() {
     if (this.userForm.valid) {
