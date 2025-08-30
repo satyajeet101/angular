@@ -1,5 +1,5 @@
-[CommonModule](#CommonModule) 
-[Pure and Impure Pipes](#Pure and Impure Pipes)
+# Contents
+[CommonModule](#CommonModule) | [Pipe](#Pipe)
 
 ## Routing
 ```typescript
@@ -35,7 +35,7 @@ const routes: Routes = [
     - Recommended for 14+
     - Faster
     - add <router-outlet> in app.component.html — otherwise, lazy-loaded components won’t display.
-## Angular Pipe
+## Pipe
 - Create pipe as 
 ```typescript
 @Pipe({
