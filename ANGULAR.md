@@ -1,3 +1,5 @@
+[CommonModule](#CommonModule) [Pure and Impure Pipes](#Pure and Impure Pipes)
+
 ## Routing
 ```typescript
 const routes: Routes = [
