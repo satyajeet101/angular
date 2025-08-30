@@ -64,7 +64,7 @@ export class TruncatePipe implements PipeTransform {
    - More expensive than pure pipes. 
    - Used when dealing with mutable data like arrays, objects, or external sources.
    - How to make impure pipe
-     ```
+     ```typescript
      @Pipe({
           name: 'pipeName',
           pure: false
