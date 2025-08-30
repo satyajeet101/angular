@@ -73,3 +73,28 @@ export class TruncatePipe implements PipeTransform {
    - When to use impure pipes:
      - When working with real-time data. 
      - When modifying an array or object in place.
+## Service
+```Typescript
+@Injectable({
+  providedIn: 'root',
+})
+
+export class MyApiService {
+  constructor(private http: HttpClient) {}
+  basePath = 'https://jsonplaceholder.typicode.com/';
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.basePath + 'users');
+  }
+}
+```
+
+## Dropdown
+```html
+<select [(ngModel)]="selectedType" (change)= "fetchData()">
+   <option value="users">Users</option>
+   <option value="posts">Posts</option>
+</select>
+```
+```Typescript
+selectedType = 'users'; // default value
+```
