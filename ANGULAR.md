@@ -1,7 +1,7 @@
 # Contents
 [CommonModule](#CommonModule) | [Pipe](#Pipe) | [Routing](#Routing) | 
 [Lazy Load](#loadComponent-Vs-loadChildren) | [Service](#Service) | [Dropdown](#Dropdown) | 
-[Search](#Search)
+[Search](#Search) | [Standalone-app](#Standalone-app)
 
 
 ## Routing
@@ -131,4 +131,35 @@ selectedType = 'users'; // default value
          );
        }
   }
+```
+
+## Standalone-app
+
+### How to add routing module
+1. Create app-route.ts
+```Typescript
+import { Routes } from '@angular/router';
+import { HomeComponent } from './app/home-component/home-component';
+export const routes: Routes = [
+  {
+    path: '',
+    component: HomeComponent
+  }
+]
+```
+2. In main.ts
+```Typescript
+import { provideRouter, RouterOutlet } from '@angular/router';
+@Component({
+  selector: 'app-root',
+  standalone: true, //✅ This one is NEEDED
+  imports:[RouterOutlet], //✅ This one is NEEDED
+  templateUrl: './app-component.html', //✅ This one is NEEDED
+})
+export class App {
+  name = 'Angular';
+}
+bootstrapApplication(App, {
+  providers: [provideRouter(routes)], //✅ This one is NEEDED
+}); 
 ```
