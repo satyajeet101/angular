@@ -1,7 +1,7 @@
 # Contents
 [CommonModule](#CommonModule) | [Pipe](#Pipe) | [Routing](#Routing) | 
 [Lazy Load](#loadComponent-Vs-loadChildren) | [Service](#Service) | [Dropdown](#Dropdown) | 
-[Search](#Search) | [Standalone-app](#Standalone-app)
+[Search](#Search) | [Standalone-app](#Standalone-app) | [Form-Validation](#Form-Validation)
 
 
 ## Routing
@@ -132,7 +132,54 @@ selectedType = 'users'; // default value
        }
   }
 ```
+## Form-Validation
+in module 
+```Typescript
+import { ReactiveFormsModule } from '@angular/forms';
+```
+```html
+<form [formGroup]="userForm" (ngSubmit)="submitUser()">
+  <label>Name :</label>
+  <input type="text" formControlName="name" />
+  <div *ngIf="userForm.get('name')?.touched && userForm.get('name')?.invalid">
+    <small *ngIf="userForm.get('name')?.errors?.['required']">Mandatory</small>
+    <small *ngIf="userForm.get('name')?.errors?.['minlength']">Min 3</small>
+  </div>
+  <br />
+  <label>Email :</label>
+  <input type="email" formControlName="email" />
+  <div *ngIf="userForm.get('email')?.touched && userForm.get('email')?.invalid">
+    <small *ngIf="userForm.get('email')?.errors?.['required']">Mandatory</small>
+    <small *ngIf="userForm.get('email')?.errors?.['email']"
+      >Enter correct format</small
+    >
+  </div>
+  <br />
+  <button type="submit" [disabled]="userForm.invalid">Submit</button>
+</form>
 
+```
+```Typescript
+export class UserComponent implements OnInit{
+  constructor(private fb : FormBuilder){}
+
+  users: User[]=[];
+
+  userForm!: FormGroup;
+  ngOnInit(): void {
+    this.userForm = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['',[Validators.required, Validators.email]]
+    });
+  }
+  submitUser(){
+    if(this.userForm.valid){
+      this.users = this.userForm.value;
+      this.userForm.reset();
+    }
+  }
+}
+```
 ## Standalone-app
 
 ### How to add routing module
