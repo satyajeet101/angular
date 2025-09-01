@@ -2,7 +2,7 @@
 [CommonModule](#CommonModule) | [Pipe](#Pipe) | [Routing](#Routing) | 
 [Lazy Load](#loadComponent-Vs-loadChildren) | [Service](#Service) | [Dropdown](#Dropdown) | 
 [Search](#Search) | [Standalone-app](#Standalone-app) | [Form-Validation](#Form-Validation) | 
-[CheckBox](#CheckBox)
+[CheckBox](#CheckBox-with-for-loop) | [ForLoop](#CheckBox-with-for-loop)
 
 
 ## Routing
@@ -211,8 +211,10 @@ bootstrapApplication(App, {
   providers: [provideRouter(routes)], //✅ This one is NEEDED
 }); 
 ```
-## CheckBox
+## CheckBox-with-for-loop
 ```html
-<input type="checkbox" [checked]="toDo.isDone" (change)="updateIsDone(i)"/>
-<!-- toDo.isDone is boolean type-->
+<div *ngFor="let toDo of toDos; let i = index">
+   <input type="checkbox" [checked]="toDo.isDone" (change)="updateIsDone(i)"/>
+   <!-- toDo.isDone is boolean type-->
+</div>
 ```
