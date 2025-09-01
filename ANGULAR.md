@@ -2,7 +2,7 @@
 [CommonModule](#CommonModule) | [Pipe](#Pipe) | [Routing](#Routing) | 
 [Lazy Load](#loadComponent-Vs-loadChildren) | [Service](#Service) | [Dropdown](#Dropdown) | 
 [Search](#Search) | [Standalone-app](#Standalone-app) | [Form-Validation](#Form-Validation) | 
-[CheckBox](#CheckBox-with-for-loop) | [ForLoop](#CheckBox-with-for-loop)
+[CheckBox](#CheckBox-with-for-loop) | [For Loop](#CheckBox-with-for-loop) | [ForkJoin](#Fork-Join)
 
 
 ## Routing
