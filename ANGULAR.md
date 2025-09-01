@@ -1,7 +1,8 @@
 # Contents
 [CommonModule](#CommonModule) | [Pipe](#Pipe) | [Routing](#Routing) | 
 [Lazy Load](#loadComponent-Vs-loadChildren) | [Service](#Service) | [Dropdown](#Dropdown) | 
-[Search](#Search) | [Standalone-app](#Standalone-app) | [Form-Validation](#Form-Validation)
+[Search](#Search) | [Standalone-app](#Standalone-app) | [Form-Validation](#Form-Validation) | 
+[CheckBox](#CheckBox)
 
 
 ## Routing
@@ -209,4 +210,9 @@ export class App {
 bootstrapApplication(App, {
   providers: [provideRouter(routes)], //✅ This one is NEEDED
 }); 
+```
+## CheckBox
+```html
+<input type="checkbox" [checked]="toDo.isDone" (change)="updateIsDone(i)"/>
+<!-- toDo.isDone is boolean type-->
 ```
