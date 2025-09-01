@@ -2,7 +2,7 @@
 [CommonModule](#CommonModule) | [Pipe](#Pipe) | [Routing](#Routing) | 
 [Lazy Load](#loadComponent-Vs-loadChildren) | [Service](#Service) | [Dropdown](#Dropdown) | 
 [Search](#Search) | [Standalone-app](#Standalone-app) | [Form-Validation](#Form-Validation) | 
-[CheckBox](#CheckBox-with-for-loop) | [For Loop](#CheckBox-with-for-loop) | [ForkJoin](#Fork-Join)
+[CheckBox](#CheckBox-with-for-loop) | [For Loop](#CheckBox-with-for-loop) | [Subscribe Options](#Subscribe-Options)
 
 
 ## Routing
@@ -222,7 +222,11 @@ bootstrapApplication(App, {
 </div>
 ```
 
-## Fork-Join
+## Subscribe-Options
+### forkJoin
+- Emits once when all observables complete. 
+- Returns results together. 
+- Good for parallel independent API calls.
 ```Typescript
 ngOnInit(): void {
  forkJoin({
@@ -236,3 +240,108 @@ ngOnInit(): void {
  })
 }
 ```
+### combineLatest
+- Emits every time any observable emits a value. 
+- Useful for real-time dashboards or reactive forms.
+```Typescript
+ngOnInit(): void {
+ combineLatest({
+   u: this.service.getUsers(),
+   p: this.service.getPosts(),
+ }).subscribe({
+   next: (res) => {
+     this.users = res.u;
+     this.posts = res.p;
+   },
+ });
+}
+```
+### zip
+- Emits arrays of results. 
+- Waits for one value from each observable before emitting. 
+- Good when APIs must return synchronized data.
+```Typescript
+ngOnInit(): void {
+ zip(
+   this.service.getUsers(),
+   this.service.getPosts()
+ ).subscribe(([users, posts]) => {
+   console.log(users, posts);
+ });
+}
+```
+### merge
+- Does not wait for all observables to complete. 
+- Emits results as soon as they arrive. 
+- Good for faster page loading when APIs are independent.
+```Typescript
+ngOnInit(): void {
+   merge(
+     this.appService.getUsers(),
+     this.appService.getPosts()
+   ).subscribe(result => {
+     console.log('Received:', result);
+   });
+}
+```
+### switchMap
+- Cancels previous requests if a new one starts. 
+- Ideal for search or auto-suggest features.
+```Typescript
+ngOnInit(): void {
+   this.appService.getUsers()
+  .pipe(
+    switchMap(users => this.appService.getPosts()) // depends on users
+  )
+  .subscribe(posts => {
+    console.log('Posts:', posts);
+  });
+}
+```
+### concatMap
+- Runs one request at a time. 
+- Good when APIs must execute in order.
+```Typescript
+ngOnInit(): void {
+   this.appService.getUsers()
+     .pipe(
+       concatMap(users => this.appService.getPosts())
+     )
+     .subscribe(posts => {
+       console.log('Posts:', posts);
+     });
+}
+```
+### Generic example
+```Typescript
+this.http.get('https://jsonplaceholder.typicode.com/posts')
+  .pipe(
+    // Retry 2 times if API fails
+    retry(2),
+    // Log API response
+    tap(data => console.log('Raw:', data)),
+    // Take only first 10 posts
+    map((posts: any) => posts.slice(0, 10)),
+    // Stop after first response
+    first(),
+    // Handle errors
+    catchError(err => {
+      console.error('Error:', err);
+      return of([]);
+    }),
+    finalize(() => console.log('Request completed'))
+  )
+  .subscribe(data => {
+    this.posts = data;
+  });
+```
+
+| Operator          | Emits When?             | Best Use Case                   | Waits for All? |
+| ----------------- | ----------------------- | ------------------------------- | -------------- |
+| **forkJoin**      | When all complete       | Load all data once              | ✅ Yes          |
+| **combineLatest** | Whenever any emits      | Reactive updates                | ❌ No           |
+| **zip**           | When all emit **once**  | Pair one-to-one results         | ✅ Yes          |
+| **merge**         | As soon as any emits    | Process results immediately     | ❌ No           |
+| **switchMap**     | On latest value         | Cancel old requests, get latest | ❌ No           |
+| **concatMap**     | Sequentially            | Ordered API calls               | ✅ Yes          |
+| **exhaustMap**    | After current completes | Avoid duplicate API calls       | ✅ Yes          |
