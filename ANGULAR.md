@@ -208,7 +208,10 @@ export class App {
   name = 'Angular';
 }
 bootstrapApplication(App, {
-  providers: [provideRouter(routes)], //✅ This one is NEEDED
+  providers: [
+  provideRouter(routes), //✅ This one is for router
+  provideHttpClient() //✅ This one is for Http
+  ], 
 }); 
 ```
 ## CheckBox-with-for-loop
