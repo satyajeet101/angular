@@ -221,3 +221,18 @@ bootstrapApplication(App, {
    <!-- toDo.isDone is boolean type-->
 </div>
 ```
+
+## Fork-Join
+```Typescript
+ngOnInit(): void {
+ forkJoin({
+   u: this.service.getUsers(),
+   p: this.service.getPosts()
+ }).subscribe({
+   next: (res) => {
+     this.users = res.u;
+     this.posts = res.p;
+   }
+ })
+}
+```
