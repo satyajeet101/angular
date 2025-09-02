@@ -485,7 +485,7 @@ import { AuthInterceptor } from './auth.interceptor';
 export class AppModule {}
 ```
 ## Route-Guard
-- ng generate gaurd auth
+- ng generate guard auth
 ```Typescript
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
