@@ -102,13 +102,21 @@ const routes: Routes = [
 ```Typescript
 import { Router } from '@angular/router';
 constructor(private router: Router) {}
-goToUser(id: number) {
+goToUser(id: number, event: Event) {
+  event.preventDefault(); // HTML is like  => <a href="#" (click)="userDetails(i, $event)">{{user.name}}</a>
   this.router.navigate(['/user', id]);
 }
 
 import { ActivatedRoute } from '@angular/router';
 constructor(private route: ActivatedRoute) {}
 this.userId = this.route.snapshot.paramMap.get('id')!;
+```
+### directly handle the navigation in html as 
+```html
+<p *ngFor="let user of users; let i = index">
+  {{i}} : 
+  <a [routerLink]="['/user', i]">{{user.name}}</a>
+</p>
 ```
 ## CommonModule
 - CommonModule provides Angular's most commonly used directives and pipes.
