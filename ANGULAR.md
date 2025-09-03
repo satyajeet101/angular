@@ -111,7 +111,7 @@ import { ActivatedRoute } from '@angular/router';
 constructor(private route: ActivatedRoute) {}
 this.userId = this.route.snapshot.paramMap.get('id')!;
 ```
-### directly handle the navigation in html as 
+### OR directly handle the navigation in html
 ```html
 <p *ngFor="let user of users; let i = index">
   {{i}} : 
