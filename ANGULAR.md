@@ -5,7 +5,7 @@
 [CheckBox](#CheckBox-with-for-loop) | [For Loop](#CheckBox-with-for-loop) | [Subscribe Options](#Subscribe-Options) | [Binding](#Binding)
 | [AOT-JIT](#AOT-JIT) | [AOT-JIT](#AOT-JIT) | [Lifecycle Hooks](#Lifecycle-Hooks)
 | [HTTP INTERCEPTOR](#HTTP-INTERCEPTOR) | [Route Guard](#Route-Guard) | [Ivy](#Ivy)
-| [Angular Elements](#Angular-Elements)
+| [Angular Elements](#Angular-Elements) | [Promise vs Observable](#Promise-vs-Observable)
 
 ## Binding
 ### Two way Binding
@@ -543,3 +543,71 @@ To enable Ivy,  In tsconfig.json
 
 ## Angular-Elements
 Web Component Integration: Allows Angular components to be packaged as custom elements (web components) that can be used in any HTML page or framework.
+
+## Promise-vs-Observable
+### Observable
+- Multiple values over time: Observables can emit multiple values (streams), making them ideal for things like user input, WebSocket data, or any event-based data. 
+- Lazy execution: Observables are not executed until you subscribe to them. 
+- Operators: RxJS provides powerful operators like map, filter, merge, switchMap, etc., for complex data manipulation. 
+- Cancelable: You can unsubscribe from an Observable to cancel the operation. 
+- Angular integration: Angular’s HttpClient returns Observables by default.
+
+### Promise (native JavaScript)
+- Single value: A Promise resolves once with a single value or rejects with an error. 
+- Eager execution: Promises start executing immediately when created. 
+- Chaining: You can chain .then() and .catch() for handling results and errors. 
+- Not cancelable: Once started, a Promise cannot be canceled. 
+- Simpler syntax: Easier to use for one-time async operations like fetching data once.
+- Example of use
+
+```Typescript
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, firstValueFrom } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DataService {
+  private apiUrl = 'https://jsonplaceholder.typicode.com/posts';
+
+  constructor(private http: HttpClient) {}
+
+  // Using Observable
+  getDataObservable(): Observable<any> {
+    return this.http.get(this.apiUrl);
+  }
+
+  // Using Promise
+  async getDataPromise(): Promise<any> {
+    return await firstValueFrom(this.http.get(this.apiUrl)); //converts the Observable to a Promise
+  }
+}
+
+
+import { Component, OnInit } from '@angular/core';
+import { DataService } from './data.service';
+
+@Component({
+  selector: 'app-root',
+  template: `<h1>Check Console for Output</h1>`
+})
+export class AppComponent implements OnInit {
+
+  constructor(private dataService: DataService) {}
+
+  ngOnInit(): void {
+    // Using Observable
+    this.dataService.getDataObservable().subscribe({
+      next: data => console.log('Observable Data:', data),
+      error: err => console.error('Observable Error:', err)
+    });
+
+    // Using Promise
+    this.dataService.getDataPromise()
+      .then(data => console.log('Promise Data:', data))
+      .catch(err => console.error('Promise Error:', err));
+  }
+}
+
+```
