@@ -1,11 +1,61 @@
 # Contents
-[CommonModule](#CommonModule) | [Pipe](#Pipe) | [Routing](#Routing) | 
+[Cheat](#Cheat)[CommonModule](#CommonModule) | [Pipe](#Pipe) | [Routing](#Routing) | 
 [Lazy Load](#loadComponent-Vs-loadChildren) | [Service](#Service) | [Dropdown](#Dropdown) | 
 [Search](#Search) | [Standalone-app](#Standalone-app) | [Form-Validation](#Form-Validation) | 
 [CheckBox](#CheckBox-with-for-loop) | [For Loop](#CheckBox-with-for-loop) | [Subscribe Options](#Subscribe-Options) | [Binding](#Binding)
 | [AOT-JIT](#AOT-JIT) | [AOT-JIT](#AOT-JIT) | [Lifecycle Hooks](#Lifecycle-Hooks)
 | [HTTP INTERCEPTOR](#HTTP-INTERCEPTOR) | [Route Guard](#Route-Guard) | [Ivy](#Ivy)
 | [Angular Elements](#Angular-Elements) | [Promise vs Observable](#Promise-vs-Observable)
+
+## Cheat
+### Form validation
+```Typescript
+userForm!: FormGroup;
+constructor(private fb: FormBuilder) {}
+ngOnInit(): void {
+    this.userForm = this.fb.group({
+        username: ['', [Validators.required, Validators.minLength(3)]],
+    });
+}
+onSubmit() {
+    if (this.userForm.valid) {
+        const newUser: User = this.userForm.value;
+    }
+}
+```
+```html
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label>Username:</label>
+    <input type="text" formControlName="username" />
+    <div *ngIf="userForm.get('username')?.invalid && userForm.get('username')?.touched" class="error">
+      <small *ngIf="userForm.get('username')?.errors?.['required']">Username is required.</small>
+    </div>
+  </div>
+  <button type="submit" [disabled]="userForm.invalid">Submit</button>
+```
+### Parent Child
+```Typescript
+//PARENT
+handleChildMessage(msg: string) {
+    alert('Child says: ' + msg);
+}
+//CHILD
+  @Input() user!: User; // Parent → Child
+  @Output() notifyParent = new EventEmitter(); // Child → Parent
+  sendMessageToParent() {
+    this.notifyParent.emit(
+      `User ${this.user.username} clicked "Notify" button`
+    );
+  }
+```
+```html
+<!--PARENT-->
+<app-user-details *ngIf="selectedUser" [user]="selectedUser" (notifyParent)="handleChildMessage($event)">
+</app-user-details>
+<!--CHILD-->
+<button (click)="sendMessageToParent()">Notify Parent</button>
+```
 
 ## Binding
 ### Two way Binding
