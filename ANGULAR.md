@@ -56,6 +56,16 @@ handleChildMessage(msg: string) {
 <!--CHILD-->
 <button (click)="sendMessageToParent()">Notify Parent</button>
 ```
+### Dropdown
+```html
+<select [(ngModel)]="selectedType" (change)="fetchData()">
+  <option value="users">User</option>
+  <option value="posts">Post </option>
+</select>
+```
+```Typescript
+selectedType: string = 'users';
+```
 
 ## Binding
 ### Two way Binding
