@@ -200,12 +200,6 @@ this.userId = this.route.snapshot.paramMap.get('id')!;
   <a [routerLink]="['/user', i]">{{user.name}}</a>
 </p>
 ```
-## CommonModule
-- CommonModule provides Angular's most commonly used directives and pipes.
-- You don’t import it in AppModule because BrowserModule already includes it.
-- You must import it in feature modules.
-- It makes *ngIf, *ngFor, ngSwitch, ngClass, etc., work.
-
 ## loadComponent-Vs-loadChildren
 1. loadChildren, old style
     - Module level
@@ -216,6 +210,11 @@ this.userId = this.route.snapshot.paramMap.get('id')!;
     - Recommended for 14+
     - Faster
     - add <router-outlet> in app.component.html — otherwise, lazy-loaded components won’t display.
+## CommonModule
+- CommonModule provides Angular's most commonly used directives and pipes.
+- You don’t import it in AppModule because BrowserModule already includes it.
+- You must import it in feature modules.
+- It makes *ngIf, *ngFor, ngSwitch, ngClass, etc., work.
 ## Pipe
 - Create pipe as 
 ```typescript
