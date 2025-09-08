@@ -387,7 +387,11 @@ export class App {
 bootstrapApplication(App, {
   providers: [
   provideRouter(routes), //✅ This one is for router
-  provideHttpClient() //✅ This one is for Http
+  provideHttpClient(
+      withInterceptors([//✅ This one will be added only if we need httpinterceptor
+        (req, next) => new AuthInterceptor().intercept(req, next)
+      ])
+    ) //✅ This one is for Http
   ], 
 }); 
 ```
