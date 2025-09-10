@@ -99,6 +99,13 @@ ngOnInit(): void {
 ### One way binding
 - {{ message }}
 - [property]="value"
+### Signal binding
+```html
+title = signal('My first angular APP');
+```
+```Typescript
+<p>{{title()}}</p>
+```
 
 ### Event Binding
 ```html
