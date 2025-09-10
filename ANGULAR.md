@@ -100,13 +100,12 @@ ngOnInit(): void {
 - {{ message }}
 - [property]="value"
 ### Signal binding
-```html
+```Typescript
 title = signal('My first angular APP');
 ```
-```Typescript
+```html
 <p>{{title()}}</p>
 ```
-
 ### Event Binding
 ```html
 <input (input)="onInputChange($event)">
