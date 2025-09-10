@@ -2,7 +2,7 @@
 [Cheat](#Cheat) | [CommonModule](#CommonModule) | [Pipe](#Pipe) | [Routing](#Routing) | 
 [Lazy Load](#loadComponent-Vs-loadChildren) | [Service](#Service) | [Dropdown](#Dropdown) | 
 [Search](#Search) | [Standalone-app](#Standalone-app) | [Form-Validation](#Form-Validation) | 
-[CheckBox](#CheckBox-with-for-loop) | [For Loop](#CheckBox-with-for-loop) | [Subscribe Options](#Subscribe-Options) | [Binding](#Binding)
+[CheckBox](#CheckBox-with-for-loop) | [For Loop](#CheckBox-with-for-loop) | [Subscribe Options](#Subscribe-Options) | [Data Binding](#Data-Binding)
 | [AOT-JIT](#AOT-JIT) | [AOT-JIT](#AOT-JIT) | [Lifecycle Hooks](#Lifecycle-Hooks)
 | [HTTP INTERCEPTOR](#HTTP-INTERCEPTOR) | [Route Guard](#Route-Guard) | [Ivy](#Ivy)
 | [Angular Elements](#Angular-Elements) | [Promise vs Observable](#Promise-vs-Observable)
@@ -89,7 +89,7 @@ ngOnInit(): void {
     }
   }
 ```
-## Binding
+## Data-Binding
 ### Two way Binding
 ```html
 <input [(ngModel)]="username" placeholder="Enter your name">
