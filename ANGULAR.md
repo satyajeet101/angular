@@ -5,7 +5,7 @@
 [CheckBox](#CheckBox-with-for-loop) | [For Loop](#CheckBox-with-for-loop) | [Subscribe Options](#Subscribe-Options) | [Data Binding](#Data-Binding)
 | [AOT-JIT](#AOT-JIT) | [AOT-JIT](#AOT-JIT) | [Lifecycle Hooks](#Lifecycle-Hooks)
 | [HTTP INTERCEPTOR](#HTTP-INTERCEPTOR) | [Route Guard](#Route-Guard) | [Ivy](#Ivy)
-| [Angular Elements](#Angular-Elements) | [Promise vs Observable](#Promise-vs-Observable)
+| [Angular Elements](#Angular-Elements) | [Promise vs Observable](#Promise-vs-Observable) | [Signal](#Signal)
 
 ## Cheat
 ### Form validation
@@ -700,5 +700,40 @@ export class AppComponent implements OnInit {
       .catch(err => console.error('Promise Error:', err));
   }
 }
-
+```
+## Signal
+- Best Practices
+  - Use signals for local component state.
+  - Prefer computed() for derived values.
+  - Use effect() for side effects like logging or service calls.
+  - Avoid mixing signals with RxJS unless necessary — signals are simpler and more performant for local state.
+### Create a Signal
+```Typescript
+import { signal } from '@angular/core';
+export class HomeComponent {
+  homeMessage = signal("Hello world!");
+}
+```
+### Read Signal
+```html
+<p>{{ homeMessage() }}</p>
+```
+### Update Signal Value
+```Typescript
+this.homeMessage.set("Welcome to Angular Signals!");
+//OR
+this.homeMessage.update(msg => msg + " Part 2");
+```
+### React to Changes
+```Typescript
+import { effect } from '@angular/core';
+effect(() => {
+  console.log("Message changed:", this.homeMessage());
+});
+```
+### Use Computed Signals
+```Typescript
+//Use computed() to derive values from other signals.
+import { computed } from '@angular/core';
+uppercaseMessage = computed(() => this.homeMessage().toUpperCase());
 ```
