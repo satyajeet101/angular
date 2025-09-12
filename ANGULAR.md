@@ -5,7 +5,7 @@
 [CheckBox](#CheckBox-with-for-loop) | [For Loop](#CheckBox-with-for-loop) | [Subscribe Options](#Subscribe-Options) | [Data Binding](#Data-Binding)
 | [AOT-JIT](#AOT-JIT) | [AOT-JIT](#AOT-JIT) | [Lifecycle Hooks](#Lifecycle-Hooks)
 | [HTTP INTERCEPTOR](#HTTP-INTERCEPTOR) | [Route Guard](#Route-Guard) | [Ivy](#Ivy)
-| [Angular Elements](#Angular-Elements) | [Promise vs Observable](#Promise-vs-Observable) | [Signal](#Signal)
+| [Angular Elements](#Angular-Elements) | [Promise vs Observable](#Promise-vs-Observable) | [Signal](#Signal) | [NGRX](#NGRX)
 
 ## Cheat
 ### Form validation
@@ -737,3 +737,122 @@ effect(() => {
 import { computed } from '@angular/core';
 uppercaseMessage = computed(() => this.homeMessage().toUpperCase());
 ```
+## NGRX
+![ngrx.png](ngrx.png)
+### Install
+ng add @ngrx/store
+ng add @ngrx/effects
+ng add @ngrx/store-devtools
+
+### Create app state
+```Typescript
+import { CartState } from "./cart/cart.reducer";
+import { CounterState } from "./counter/counter.reducer";
+import { ProuductState } from "./product/product.reducer";
+
+export interface AppState {//It can hold state for multiple things
+  counter: CounterState,//To maintain the state of counter
+  cart: CartState,//To maintain the state of cart
+  product: ProuductState//To maintain the state of product
+}
+```
+### Creat action
+```Typescript
+import { createAction, props  } from "@ngrx/store";
+
+export const increment = createAction('[Counter Component] Increment');
+export const decrement = createAction('[Counter Component] Decrement');
+export const reset = createAction('[Counter Component] Reset');
+//OR
+export const loadUserSuccess = createAction('[User] Load User Success', props<{ name: string; email: string }>());
+```
+### Create reducer to play with state
+```Typescript
+import {createReducer, on} from '@ngrx/store'
+import { decrement, increment, reset } from './counter.actions'
+
+export interface CounterState {
+  count: number
+}
+
+export const initialCounterState: CounterState = {
+  count: 0
+}
+
+export const counterReducer = createReducer(
+  initialCounterState,
+  on(increment, state=> ({...state, count: state.count + 1})),
+  on(decrement, state => ({ ...state, count: state.count - 1 })),
+  on(reset, state => ({ ...state, count: 0 }))
+)
+```
+### Register the Reducer in App Module or main.ts
+```Typescript
+@NgModule({
+  imports: [
+    StoreModule.forRoot({ counter: counterReducer })
+  ]
+})
+//In MAIN.ts
+
+provideStore(),
+provideState({ name: 'counter', reducer: counterReducer }),
+```
+### Create selector
+```Typescript
+import { createSelector } from "@ngrx/store";
+import { AppState } from "../app.state";
+
+export const selectCounterState = (state: AppState) => state.counter;
+
+export const selectCount = createSelector(
+  selectCounterState,
+  (state)=> state.count
+)
+```
+### Use in component
+```Typescript
+import { Component, inject } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { AppState } from '../states/app.state';
+import { selectCount } from '../states/counter/counter.selector';
+import { AsyncPipe } from '@angular/common';
+import { decrement, increment, reset } from '../states/counter/counter.actions';
+import { CounterStore } from '../store/counter.store';
+
+@Component({
+  selector: 'app-counter',
+  standalone: true,
+  imports: [AsyncPipe],
+  templateUrl: './counter.component.html',
+  styleUrl: './counter.component.scss',
+  providers: [CounterStore],
+})
+export class CounterComponent {
+  count$: Observable<number>;
+  counterStore = inject(CounterStore);
+
+  constructor(private store: Store<AppState>) {
+    this.count$ = this.store.select(selectCount);
+  }
+
+  increment() {
+    this.store.dispatch(increment());
+  }
+
+  decrement() {
+    this.store.dispatch(decrement());
+  }
+
+  reset() {
+    this.store.dispatch(reset());
+  }
+}
+```
+### Use in html
+```html
+{{counterStore.count()}}
+```
+### Add Effects
+### Register effect
