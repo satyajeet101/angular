@@ -877,10 +877,16 @@ export class CounterComponent {
       - Enable production mode, ng build --configuration production
 5. Efficient DOM & Template Usage
       - Avoid deep nested structures and excessive *ngIf/*ngFor.
-      - Use trackBy in *ngFor to prevent re-rendering
+      - Use trackBy in *ngFor to prevent re-rendering, with thius Angular will only re-render items whose id changed, even if the array itself is replaced.
         ```html
         <div *ngFor="let item of items; trackBy: trackById"></div>
         ```
+        ```Typescript
+        trackById(index: number, item: any): number {
+          return item.id;
+        }
+        ```
+
 6. Optimize Forms
       - Prefer Reactive Forms for complex scenarios.
       - Avoid frequent form value changes triggering change detection.
