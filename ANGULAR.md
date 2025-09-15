@@ -5,7 +5,7 @@
 [CheckBox](#CheckBox-with-for-loop) | [For Loop](#CheckBox-with-for-loop) | [Subscribe Options](#Subscribe-Options) | [Data Binding](#Data-Binding)
 | [AOT-JIT](#AOT-JIT) | [AOT-JIT](#AOT-JIT) | [Lifecycle Hooks](#Lifecycle-Hooks)
 | [HTTP INTERCEPTOR](#HTTP-INTERCEPTOR) | [Route Guard](#Route-Guard) | [Ivy](#Ivy)
-| [Angular Elements](#Angular-Elements) | [Promise vs Observable](#Promise-vs-Observable) | [Signal](#Signal) | [NGRX](#NGRX)
+| [Angular Elements](#Angular-Elements) | [Promise vs Observable](#Promise-vs-Observable) | [Signal](#Signal) | [NGRX](#NGRX) | [Performance](#Performance)
 
 ## Cheat
 ### Form validation
@@ -856,3 +856,14 @@ export class CounterComponent {
 ```
 ### Add Effects
 ### Register effect
+## Performance
+### Change Detection Optimization
+- Use ChangeDetectionStrategy.OnPush
+  ```Typescript
+  @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush
+  // tells Angular to check for changes only when inputs change or events occur
+})
+```
+- Avoid unnecessary bindings in templates that trigger change detection.
+### Lazy Loading Modules
