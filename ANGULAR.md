@@ -858,34 +858,34 @@ export class CounterComponent {
 ### Register effect
 ## Performance
 1. Change Detection Optimization
-- Use ChangeDetectionStrategy.OnPush
-```Typescript
-  @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush
-  // tells Angular to check for changes only when inputs change or events occur
-})
-```
-- Avoid unnecessary bindings in templates that trigger change detection.
+    - Use ChangeDetectionStrategy.OnPush
+    ```Typescript
+      @Component({
+      changeDetection: ChangeDetectionStrategy.OnPush
+      // tells Angular to check for changes only when inputs change or events occur
+    })
+    ```
+    - Avoid unnecessary bindings in templates that trigger change detection.
 2. Lazy Loading Modules
 3. Use Standalone Components
 4. Tree Shaking & Bundle Optimization
-  - Remove unused code and libraries.
-  - Use ES modules and pure functions.
-  - Enable production mode, ng build --configuration production
+      - Remove unused code and libraries.
+      - Use ES modules and pure functions.
+      - Enable production mode, ng build --configuration production
 5. Efficient DOM & Template Usage
-  - Avoid deep nested structures and excessive *ngIf/*ngFor.
-  - Use trackBy in *ngFor to prevent re-rendering
-    ```html
-    <div *ngFor="let item of items; trackBy: trackById"></div>
-    ```
+      - Avoid deep nested structures and excessive *ngIf/*ngFor.
+      - Use trackBy in *ngFor to prevent re-rendering
+        ```html
+        <div *ngFor="let item of items; trackBy: trackById"></div>
+        ```
 6. Optimize Forms
-  - Prefer Reactive Forms for complex scenarios.
-  - Avoid frequent form value changes triggering change detection.
+      - Prefer Reactive Forms for complex scenarios.
+      - Avoid frequent form value changes triggering change detection.
 7. Optimize API Calls
-  - Use RxJS operators like debounceTime, switchMap, and shareReplay.
-  - Cache data where possible.
-  - Avoid duplicate HTTP requests.
+      - Use RxJS operators like debounceTime, switchMap, and shareReplay.
+      - Cache data where possible.
+      - Avoid duplicate HTTP requests.
 8. Use Signals for Local State
 9. Check for Memory Leaks
-  - Unsubscribe from observables in ngOnDestroy.
-  - Avoid retaining references to DOM elements or services unnecessarily.
+      - Unsubscribe from observables in ngOnDestroy.
+      - Avoid retaining references to DOM elements or services unnecessarily.
