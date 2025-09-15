@@ -858,7 +858,10 @@ export class CounterComponent {
 ### Register effect
 ## Performance
 1. Change Detection Optimization
-    - Use ChangeDetectionStrategy.OnPush
+    - Use ChangeDetectionStrategy.OnPush, i.e. to check the change only if,
+          - When an @Input() reference changes.
+          - When an event inside the component occurs (e.g., button click).
+          - When a signal or observable emits and updates the view.
     ```Typescript
       @Component({
       changeDetection: ChangeDetectionStrategy.OnPush
