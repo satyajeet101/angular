@@ -740,9 +740,9 @@ uppercaseMessage = computed(() => this.homeMessage().toUpperCase());
 ## NGRX
 ![ngrx.png](ngrx.png)
 ### Install
-ng add @ngrx/store
-ng add @ngrx/effects
-ng add @ngrx/store-devtools
+- ng add @ngrx/stor
+- ng add @ngrx/effects
+- ng add @ngrx/store-devtools
 
 ### Create app state
 ```Typescript
