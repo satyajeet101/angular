@@ -5,7 +5,7 @@
 [CheckBox](#CheckBox-with-for-loop) | [For Loop](#CheckBox-with-for-loop) | [Subscribe Options](#Subscribe-Options) | [Data Binding](#Data-Binding) | [Event Binding](#Event-Binding) | [AOT-JIT](#AOT-JIT) | [AOT-JIT](#AOT-JIT) | [Lifecycle Hooks](#Lifecycle-Hooks)
 | [HTTP INTERCEPTOR](#HTTP-INTERCEPTOR) | [Route Guard](#Route-Guard) | [Ivy](#Ivy)
 | [Angular Elements](#Angular-Elements) | [Promise vs Observable](#Promise-vs-Observable) | [Signal](#Signal) | [NGRX](#NGRX) | [Performance](#Performance) | 
-[If Else](#If-Else)
+[If Else](#If-Else) | [For Loop](#For-Loop)
 
 ## Cheat
 ### Form validation
@@ -107,19 +107,44 @@ title = signal('My first angular APP');
 <p>{{title()}}</p>
 ```
 ### Event-Binding
+- Input
 ```html
-<input (input)="onInputChange($event)">
+<input (change)="onInputChange($event)">
+<input (blur)="onInputChange($event)">
+<input (focus)="onInputChange($event)">
+<input (keydown)="onInputChange($event)">
 ```
+- Button
+```html
+<button (click)="onButtonClick()">Submit</button>
+```
+- Dropdown
+```html
+<select (change)="onDropdownChange($event)">
+  <option value="option1">Option 1</option>
+  <option value="option2">Option 2</option>
+</select>
+```
+- CheckBox
+```html
+<input type="checkbox" (change)="onCheckboxChange($event)">
+```
+- Radio
+```html
+<input type="radio" name="options" (change)="onRadioChange($event)">
+```
+- Multiple ways to get hold on these events in typescript
 ```Typescript
 export class AppComponent {
   username: string = '';
-
   onInputChange(event: Event) {
     const inputElement = event.target as HTMLInputElement;
     this.username = inputElement.value;
+    console.log(event.type);
   }
 }
 ```
+
 ## AOT-JIT
 - In Angular, AOT (Ahead-of-Time) and JIT (Just-in-Time) are two different compilation strategies used to convert Angular 
 HTML and TypeScript code into efficient JavaScript code.
@@ -711,7 +736,7 @@ export class AppComponent implements OnInit {
 ```Typescript
 import { signal } from '@angular/core';
 export class HomeComponent {
-  homeMessage = signal("Hello world!");
+  homeMessage = signal("Hello world!"); // Writable signal
 }
 ```
 ### Read Signal
@@ -735,7 +760,14 @@ effect(() => {
 ```Typescript
 //Use computed() to derive values from other signals.
 import { computed } from '@angular/core';
-uppercaseMessage = computed(() => this.homeMessage().toUpperCase());
+const count = signal(2);
+const doubleCount = computed(() => count() * 2);// A computed signal is a derived value based on other signals. It’s read-only and automatically updates when dependencies change.
+
+console.log(doubleCount()); // 4
+
+count.set(3);
+console.log(doubleCount()); // 6 (auto-updated
+
 ```
 ## NGRX
 ![ngrx.png](ngrx.png)
@@ -899,4 +931,83 @@ export class CounterComponent {
       - Unsubscribe from observables in ngOnDestroy.
       - Avoid retaining references to DOM elements or services unnecessarily.
 ## If-Else
-
+- Use *ngIf with else
+```html
+<div *ngIf="isLoggedIn; else loginTemplate">
+  <h2>Welcome back, user!</h2>
+</div>
+<ng-template #loginTemplate>
+  <h2>Please log in to continue.</h2>
+</ng-template>
+```
+- Use *ngIf with then and else
+```html
+<div *ngIf="isLoggedIn; then loggedInTemplate; else loginTemplate"></div>
+<ng-template #loggedInTemplate>
+  <h2>Welcome back, user!</h2>
+</ng-template>
+<ng-template #loginTemplate>
+  <h2>Please log in to continue.</h2>
+</ng-template>
+```
+- Use ng-container to avoid extra DOM elements
+```html
+<ng-container *ngIf="isLoggedIn; else loginTemplate">
+  <h2>Welcome back, user!</h2>
+</ng-container>
+<ng-template #loginTemplate>
+  <h2>Please log in to continue.</h2> 
+</ng-template>
+```
+- Use multiple conditions with else-if
+```html
+<div *ngIf="userRole === 'admin'; else userTemplate">
+  <h2>Welcome, Admin!</h2>
+</div>
+<ng-template #userTemplate>
+  <div *ngIf="userRole === 'user'; else guestTemplate">
+    <h2>Welcome, User!</h2> 
+  </div>
+</ng-template>
+<ng-template #guestTemplate>
+  <h2>Welcome, Guest! Please log in.</h2>
+</ng-template>
+```
+- Use @if(){ }
+```html
+@if(isLoggedIn) {
+  <h2>Welcome back, user!</h2>
+} @else {
+  <h2>Please log in to continue.</h2>
+}
+```
+## For-Loop
+- *ngFor  
+```html
+<div *ngFor="let item of items">
+  <h2>{{ item.name }}</h2>
+</div>
+```
+- Use *ngFor with trackBy
+```html
+<div *ngFor="let item of items; trackBy: trackById">
+  <h2>{{ item.name }}</h2>
+</div>
+```
+```Typescript
+trackById(index: number, item: any): number {
+  return item.id;
+}
+```
+- Use *ngFor with index
+```html
+<div *ngFor="let item of items; let i = index">
+  <h2>{{ i + 1 }}. {{ item.name }}</h2>
+</div>
+```
+- Use @for
+```html
+@for(let item of items; trackBy: trackById; let i = index) {
+  <h2>{{ i + 1 }}. {{ item.name }}</h2>
+}
+```
