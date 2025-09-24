@@ -4,7 +4,8 @@
 [Search](#Search) | [Standalone-app](#Standalone-app) | [Form-Validation](#Form-Validation) | 
 [CheckBox](#CheckBox-with-for-loop) | [For Loop](#CheckBox-with-for-loop) | [Subscribe Options](#Subscribe-Options) | [Data Binding](#Data-Binding) | [Event Binding](#Event-Binding) | [AOT-JIT](#AOT-JIT) | [AOT-JIT](#AOT-JIT) | [Lifecycle Hooks](#Lifecycle-Hooks)
 | [HTTP INTERCEPTOR](#HTTP-INTERCEPTOR) | [Route Guard](#Route-Guard) | [Ivy](#Ivy)
-| [Angular Elements](#Angular-Elements) | [Promise vs Observable](#Promise-vs-Observable) | [Signal](#Signal) | [NGRX](#NGRX) | [Performance](#Performance) 
+| [Angular Elements](#Angular-Elements) | [Promise vs Observable](#Promise-vs-Observable) | [Signal](#Signal) | [NGRX](#NGRX) | [Performance](#Performance) | 
+[If Else](#If-Else)
 
 ## Cheat
 ### Form validation
@@ -897,3 +898,5 @@ export class CounterComponent {
 9. Check for Memory Leaks
       - Unsubscribe from observables in ngOnDestroy.
       - Avoid retaining references to DOM elements or services unnecessarily.
+## If-Else
+
