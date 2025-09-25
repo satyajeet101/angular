@@ -5,8 +5,8 @@
 [CheckBox](#CheckBox-with-for-loop) | [For Loop](#CheckBox-with-for-loop) | [Subscribe Options](#Subscribe-Options) | [Data Binding](#Data-Binding) | [Event Binding](#Event-Binding) | [AOT-JIT](#AOT-JIT) | [AOT-JIT](#AOT-JIT) | [Lifecycle Hooks](#Lifecycle-Hooks)
 | [HTTP INTERCEPTOR](#HTTP-INTERCEPTOR) | [Route Guard](#Route-Guard) | [Ivy](#Ivy)
 | [Angular Elements](#Angular-Elements) | [Promise vs Observable](#Promise-vs-Observable) | [Signal](#Signal) | [NGRX](#NGRX) | [Performance](#Performance) | 
-[If Else](#If-Else) | [For Loop](#For-Loop)
-
+[If Else](#If-Else) | [For Loop](#For-Loop) | [Time](#Time)
+## TOP
 ## Cheat
 ### Form validation
 ```Typescript
@@ -89,6 +89,7 @@ ngOnInit(): void {
     }
   }
 ```
+                                                                              [TOP](#TOP)
 ## Data-Binding
 ### Two way Binding
 ```html
@@ -144,7 +145,7 @@ export class AppComponent {
   }
 }
 ```
-
+                                                                              [TOP](#TOP)
 ## AOT-JIT
 - In Angular, AOT (Ahead-of-Time) and JIT (Just-in-Time) are two different compilation strategies used to convert Angular 
 HTML and TypeScript code into efficient JavaScript code.
@@ -246,6 +247,7 @@ this.userId = this.route.snapshot.paramMap.get('id')!;
 - You don’t import it in AppModule because BrowserModule already includes it.
 - You must import it in feature modules.
 - It makes *ngIf, *ngFor, ngSwitch, ngClass, etc., work.
+                                                                              [TOP](#TOP)
 ## Pipe
 - Create pipe as 
 ```typescript
@@ -302,7 +304,7 @@ export class MyApiService {
   }
 }
 ```
-
+                                                                              [TOP](#TOP)
 ## Dropdown
 ```html
 <select [(ngModel)]="selectedType" (change)= "fetchData()">
@@ -389,6 +391,7 @@ export class UserComponent implements OnInit{
   }
 }
 ```
+                                                                              [TOP](#TOP)
 ## Standalone-app
 
 ### How to add routing module
@@ -433,7 +436,7 @@ bootstrapApplication(App, {
    <!-- toDo.isDone is boolean type-->
 </div>
 ```
-
+                                                                              [TOP](#TOP)
 ## Subscribe-Options
 ### forkJoin
 - Emits once when all observables complete. 
@@ -568,7 +571,7 @@ observable.pipe(debounceTime(300)).subscribe(...)
 | **switchMap**     | On latest value         | Cancel old requests, get latest | ❌ No           |
 | **concatMap**     | Sequentially            | Ordered API calls               | ✅ Yes          |
 | **exhaustMap**    | After current completes | Avoid duplicate API calls       | ✅ Yes          |
-
+                                                                              [TOP](#TOP)
 ## HTTP-INTERCEPTOR
 1. How to Create an HTTP Interceptor
 - ng generate interceptor auth
@@ -608,6 +611,7 @@ import { AuthInterceptor } from './auth.interceptor';
 })
 export class AppModule {}
 ```
+                                                                              [TOP](#TOP)
 ## Route-Guard
 - ng generate guard auth
 ```Typescript
@@ -641,7 +645,7 @@ export class AuthGuard implements CanActivate {
 - CanActivate: Determines if a route can be activated. 
 - CanDeactivate: Checks if a route can be deactivated. 
 - CanLoad: Determines if a module can be loaded lazily.
-
+                                                                              [TOP](#TOP)
 ## Ivy
 Ivy is Angular's next-generation rendering engine, introduced to improve performance and reduce bundle sizes. 
 It offers faster compilation, more efficient rendering, and enhanced debugging capabilities. 
@@ -675,6 +679,10 @@ Web Component Integration: Allows Angular components to be packaged as custom el
 - Not cancelable: Once started, a Promise cannot be canceled. 
 - Simpler syntax: Easier to use for one-time async operations like fetching data once.
 - Example of use
+- 3 stages of Promise
+  - Pending: Initial state, neither fulfilled nor rejected.
+  - Fulfilled: Operation completed successfully.
+  - Rejected: Operation failed.
 
 ```Typescript
 import { Injectable } from '@angular/core';
@@ -701,13 +709,6 @@ export class DataService {
 }
 
 
-import { Component, OnInit } from '@angular/core';
-import { DataService } from './data.service';
-
-@Component({
-  selector: 'app-root',
-  template: `<h1>Check Console for Output</h1>`
-})
 export class AppComponent implements OnInit {
 
   constructor(private dataService: DataService) {}
@@ -715,17 +716,21 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     // Using Observable
     this.dataService.getDataObservable().subscribe({
-      next: data => console.log('Observable Data:', data),
-      error: err => console.error('Observable Error:', err)
+      next: (data) => console.log('Observable Data:', data),
+      error: (err) => console.error('Observable Error:', err),
+      complete: () => console.log('Observable Completed')
+  
     });
 
     // Using Promise
     this.dataService.getDataPromise()
       .then(data => console.log('Promise Data:', data))
-      .catch(err => console.error('Promise Error:', err));
+      .catch(err => console.error('Promise Error:', err))
+      .finally(() => console.log('Promise Completed'))
   }
 }
 ```
+                                                                              [TOP](#TOP)
 ## Signal
 - Best Practices
   - Use signals for local component state.
@@ -769,6 +774,7 @@ count.set(3);
 console.log(doubleCount()); // 6 (auto-updated
 
 ```
+                                                                              [TOP](#TOP)
 ## NGRX
 ![ngrx.png](ngrx.png)
 ### Install
@@ -930,6 +936,7 @@ export class CounterComponent {
 9. Check for Memory Leaks
       - Unsubscribe from observables in ngOnDestroy.
       - Avoid retaining references to DOM elements or services unnecessarily.
+                                                                              [TOP](#TOP)
 ## If-Else
 - Use *ngIf with else
 ```html
@@ -981,6 +988,7 @@ export class CounterComponent {
   <h2>Please log in to continue.</h2>
 }
 ```
+                                                                              [TOP](#TOP)
 ## For-Loop
 - *ngFor  
 ```html
@@ -1011,3 +1019,26 @@ trackById(index: number, item: any): number {
   <h2>{{ i + 1 }}. {{ item.name }}</h2>
 }
 ```
+## Time
+```Typescript
+import { interval } from 'rxjs';
+ngOnInit(): void {
+  interval(1000).subscribe(count => {
+    console.log('Interval count:', count);//Runs after each second
+  });
+}
+```
+```Typescript
+setTimeout(() => {
+  console.log('This runs after 2 seconds');
+}, 2000);
+``` 
+```Typescript
+import { setInterval } from 'rxjs';
+ngOnInit(): void {
+  setInterval(() => {
+    console.log('This runs after 2 seconds');
+  }, 2000);
+}
+```
+                                                                              [TOP](#TOP)
