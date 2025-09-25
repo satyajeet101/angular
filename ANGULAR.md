@@ -89,7 +89,7 @@ ngOnInit(): void {
     }
   }
 ```
-[<img width="100" height="100" alt="image" src="https://github.com/user-attachments/assets/d7549be6-d99f-4ecb-a82d-7aab3282618f" />
+[<img width="30" height="30" alt="image" src="https://github.com/user-attachments/assets/d7549be6-d99f-4ecb-a82d-7aab3282618f" />
 ](#TOP)
 ## Data-Binding
 ### Two way Binding
