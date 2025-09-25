@@ -89,7 +89,7 @@ ngOnInit(): void {
     }
   }
 ```
-                                                                              [TOP](#TOP)
+[TOP](#TOP)
 ## Data-Binding
 ### Two way Binding
 ```html
@@ -247,7 +247,7 @@ this.userId = this.route.snapshot.paramMap.get('id')!;
 - You don’t import it in AppModule because BrowserModule already includes it.
 - You must import it in feature modules.
 - It makes *ngIf, *ngFor, ngSwitch, ngClass, etc., work.
-                                                                              [TOP](#TOP)
+[TOP](#TOP)
 ## Pipe
 - Create pipe as 
 ```typescript
