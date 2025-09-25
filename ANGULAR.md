@@ -249,8 +249,6 @@ this.userId = this.route.snapshot.paramMap.get('id')!;
 - You don’t import it in AppModule because BrowserModule already includes it.
 - You must import it in feature modules.
 - It makes *ngIf, *ngFor, ngSwitch, ngClass, etc., work.
-[<img width="20" height="20" alt="image" src="upArrow.png" />
-](#CommonModule)
 ## Pipe
 - Create pipe as 
 ```typescript
