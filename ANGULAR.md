@@ -6,7 +6,7 @@
 | [HTTP INTERCEPTOR](#HTTP-INTERCEPTOR) | [Route Guard](#Route-Guard) | [Ivy](#Ivy)
 | [Angular Elements](#Angular-Elements) | [Promise vs Observable](#Promise-vs-Observable) | [Signal](#Signal) | [NGRX](#NGRX) | [Performance](#Performance) | 
 [If Else](#If-Else) | [For Loop](#For-Loop) | [Time](#Time)
-## TOP
+
 ## Cheat
 ### Form validation
 ```Typescript
@@ -89,8 +89,8 @@ ngOnInit(): void {
     }
   }
 ```
-[<img width="30" height="30" alt="image" src="https://github.com/user-attachments/assets/d7549be6-d99f-4ecb-a82d-7aab3282618f" />
-](#TOP)
+[<img width="20" height="20" alt="image" src="upArrow.png" />
+](#CommonModule)
 ## Data-Binding
 ### Two way Binding
 ```html
@@ -146,7 +146,8 @@ export class AppComponent {
   }
 }
 ```
-                                                                              [TOP](#TOP)
+[<img width="20" height="20" alt="image" src="upArrow.png" />
+](#CommonModule)
 ## AOT-JIT
 - In Angular, AOT (Ahead-of-Time) and JIT (Just-in-Time) are two different compilation strategies used to convert Angular 
 HTML and TypeScript code into efficient JavaScript code.
@@ -248,7 +249,8 @@ this.userId = this.route.snapshot.paramMap.get('id')!;
 - You don’t import it in AppModule because BrowserModule already includes it.
 - You must import it in feature modules.
 - It makes *ngIf, *ngFor, ngSwitch, ngClass, etc., work.
-[TOP](#TOP)
+[<img width="20" height="20" alt="image" src="upArrow.png" />
+](#CommonModule)
 ## Pipe
 - Create pipe as 
 ```typescript
@@ -305,7 +307,8 @@ export class MyApiService {
   }
 }
 ```
-                                                                              [TOP](#TOP)
+[<img width="20" height="20" alt="image" src="upArrow.png" />
+](#CommonModule)
 ## Dropdown
 ```html
 <select [(ngModel)]="selectedType" (change)= "fetchData()">
@@ -392,7 +395,8 @@ export class UserComponent implements OnInit{
   }
 }
 ```
-                                                                              [TOP](#TOP)
+[<img width="20" height="20" alt="image" src="upArrow.png" />
+](#CommonModule)
 ## Standalone-app
 
 ### How to add routing module
@@ -437,7 +441,8 @@ bootstrapApplication(App, {
    <!-- toDo.isDone is boolean type-->
 </div>
 ```
-                                                                              [TOP](#TOP)
+[<img width="20" height="20" alt="image" src="upArrow.png" />
+](#CommonModule)
 ## Subscribe-Options
 ### forkJoin
 - Emits once when all observables complete. 
@@ -572,7 +577,8 @@ observable.pipe(debounceTime(300)).subscribe(...)
 | **switchMap**     | On latest value         | Cancel old requests, get latest | ❌ No           |
 | **concatMap**     | Sequentially            | Ordered API calls               | ✅ Yes          |
 | **exhaustMap**    | After current completes | Avoid duplicate API calls       | ✅ Yes          |
-                                                                              [TOP](#TOP)
+[<img width="20" height="20" alt="image" src="upArrow.png" />
+](#CommonModule)
 ## HTTP-INTERCEPTOR
 1. How to Create an HTTP Interceptor
 - ng generate interceptor auth
@@ -612,7 +618,8 @@ import { AuthInterceptor } from './auth.interceptor';
 })
 export class AppModule {}
 ```
-                                                                              [TOP](#TOP)
+[<img width="20" height="20" alt="image" src="upArrow.png" />
+](#CommonModule)
 ## Route-Guard
 - ng generate guard auth
 ```Typescript
@@ -646,7 +653,8 @@ export class AuthGuard implements CanActivate {
 - CanActivate: Determines if a route can be activated. 
 - CanDeactivate: Checks if a route can be deactivated. 
 - CanLoad: Determines if a module can be loaded lazily.
-                                                                              [TOP](#TOP)
+[<img width="20" height="20" alt="image" src="upArrow.png" />
+](#CommonModule)
 ## Ivy
 Ivy is Angular's next-generation rendering engine, introduced to improve performance and reduce bundle sizes. 
 It offers faster compilation, more efficient rendering, and enhanced debugging capabilities. 
@@ -731,7 +739,8 @@ export class AppComponent implements OnInit {
   }
 }
 ```
-                                                                              [TOP](#TOP)
+[<img width="20" height="20" alt="image" src="upArrow.png" />
+](#CommonModule)
 ## Signal
 - Best Practices
   - Use signals for local component state.
@@ -775,7 +784,8 @@ count.set(3);
 console.log(doubleCount()); // 6 (auto-updated
 
 ```
-                                                                              [TOP](#TOP)
+[<img width="20" height="20" alt="image" src="upArrow.png" />
+](#CommonModule)
 ## NGRX
 ![ngrx.png](ngrx.png)
 ### Install
@@ -937,7 +947,8 @@ export class CounterComponent {
 9. Check for Memory Leaks
       - Unsubscribe from observables in ngOnDestroy.
       - Avoid retaining references to DOM elements or services unnecessarily.
-                                                                              [TOP](#TOP)
+[<img width="20" height="20" alt="image" src="upArrow.png" />
+](#CommonModule)
 ## If-Else
 - Use *ngIf with else
 ```html
@@ -989,7 +1000,8 @@ export class CounterComponent {
   <h2>Please log in to continue.</h2>
 }
 ```
-                                                                              [TOP](#TOP)
+[<img width="20" height="20" alt="image" src="upArrow.png" />
+](#CommonModule)
 ## For-Loop
 - *ngFor  
 ```html
@@ -1022,14 +1034,6 @@ trackById(index: number, item: any): number {
 ```
 ## Time
 ```Typescript
-import { interval } from 'rxjs';
-ngOnInit(): void {
-  interval(1000).subscribe(count => {
-    console.log('Interval count:', count);//Runs after each second
-  });
-}
-```
-```Typescript
 setTimeout(() => {
   console.log('This runs after 2 seconds');
 }, 2000);
@@ -1042,4 +1046,54 @@ ngOnInit(): void {
   }, 2000);
 }
 ```
-                                                                              [TOP](#TOP)
+- To get hold of Interval to clear it latter
+```Typescript
+ngOnInit(): void {
+  console.log(this.loading);
+  this.intervalId = setInterval(() => {
+    this.dataSubscription = this.service.getUser().subscribe({
+      next: (res) => {
+        console.log(res);
+        this.loading = false;
+        console.log(this.loading);
+      }
+    });
+  }, 1000);
+}
+
+ngOnDestroy(): void {
+  console.log("Destroyed!!");
+  clearInterval(this.intervalId);
+  if (this.dataSubscription) {
+    this.dataSubscription.unsubscribe();
+  }
+}
+```
+- Using Interval from rxjs
+```Typescript
+import { interval, Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+
+dataSubscription: Subscription;
+
+ngOnInit(): void {
+  this.dataSubscription = interval(1000).pipe(
+    switchMap(() => this.service.getUser())// cancel previous emissions if any running and switch to a new Observable.
+  ).subscribe({
+    next: (res) => {
+      console.log(res);
+      this.loading = false;
+    }
+  });
+}
+
+ngOnDestroy(): void {
+  console.log("Destroyed!!");
+  if (this.dataSubscription) {
+    this.dataSubscription.unsubscribe();
+  }
+}
+```
+
+[<img width="20" height="20" alt="image" src="upArrow.png" />
+](#CommonModule)
