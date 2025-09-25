@@ -90,7 +90,7 @@ ngOnInit(): void {
   }
 ```
 [<img width="20" height="20" alt="image" src="upArrow.png" />
-](#CommonModule)
+](#Data-Binding)
 ## Data-Binding
 ### Two way Binding
 ```html
@@ -147,7 +147,7 @@ export class AppComponent {
 }
 ```
 [<img width="20" height="20" alt="image" src="upArrow.png" />
-](#CommonModule)
+](#Data-Binding)
 ## AOT-JIT
 - In Angular, AOT (Ahead-of-Time) and JIT (Just-in-Time) are two different compilation strategies used to convert Angular 
 HTML and TypeScript code into efficient JavaScript code.
@@ -249,6 +249,9 @@ this.userId = this.route.snapshot.paramMap.get('id')!;
 - You don’t import it in AppModule because BrowserModule already includes it.
 - You must import it in feature modules.
 - It makes *ngIf, *ngFor, ngSwitch, ngClass, etc., work.
+
+[<img width="20" height="20" alt="image" src="upArrow.png" />
+](#Data-Binding)
 ## Pipe
 - Create pipe as 
 ```typescript
@@ -306,7 +309,7 @@ export class MyApiService {
 }
 ```
 [<img width="20" height="20" alt="image" src="upArrow.png" />
-](#CommonModule)
+](#Data-Binding)
 ## Dropdown
 ```html
 <select [(ngModel)]="selectedType" (change)= "fetchData()">
@@ -394,7 +397,7 @@ export class UserComponent implements OnInit{
 }
 ```
 [<img width="20" height="20" alt="image" src="upArrow.png" />
-](#CommonModule)
+](#Data-Binding)
 ## Standalone-app
 
 ### How to add routing module
@@ -440,7 +443,7 @@ bootstrapApplication(App, {
 </div>
 ```
 [<img width="20" height="20" alt="image" src="upArrow.png" />
-](#CommonModule)
+](#Data-Binding)
 ## Subscribe-Options
 ### forkJoin
 - Emits once when all observables complete. 
@@ -576,7 +579,7 @@ observable.pipe(debounceTime(300)).subscribe(...)
 | **concatMap**     | Sequentially            | Ordered API calls               | ✅ Yes          |
 | **exhaustMap**    | After current completes | Avoid duplicate API calls       | ✅ Yes          |
 [<img width="20" height="20" alt="image" src="upArrow.png" />
-](#CommonModule)
+](#Data-Binding)
 ## HTTP-INTERCEPTOR
 1. How to Create an HTTP Interceptor
 - ng generate interceptor auth
@@ -617,7 +620,7 @@ import { AuthInterceptor } from './auth.interceptor';
 export class AppModule {}
 ```
 [<img width="20" height="20" alt="image" src="upArrow.png" />
-](#CommonModule)
+](#Data-Binding)
 ## Route-Guard
 - ng generate guard auth
 ```Typescript
@@ -652,7 +655,7 @@ export class AuthGuard implements CanActivate {
 - CanDeactivate: Checks if a route can be deactivated. 
 - CanLoad: Determines if a module can be loaded lazily.
 [<img width="20" height="20" alt="image" src="upArrow.png" />
-](#CommonModule)
+](#Data-Binding)
 ## Ivy
 Ivy is Angular's next-generation rendering engine, introduced to improve performance and reduce bundle sizes. 
 It offers faster compilation, more efficient rendering, and enhanced debugging capabilities. 
@@ -738,7 +741,7 @@ export class AppComponent implements OnInit {
 }
 ```
 [<img width="20" height="20" alt="image" src="upArrow.png" />
-](#CommonModule)
+](#Data-Binding)
 ## Signal
 - Best Practices
   - Use signals for local component state.
@@ -783,7 +786,7 @@ console.log(doubleCount()); // 6 (auto-updated
 
 ```
 [<img width="20" height="20" alt="image" src="upArrow.png" />
-](#CommonModule)
+](#Data-Binding)
 ## NGRX
 ![ngrx.png](ngrx.png)
 ### Install
@@ -946,7 +949,7 @@ export class CounterComponent {
       - Unsubscribe from observables in ngOnDestroy.
       - Avoid retaining references to DOM elements or services unnecessarily.
 [<img width="20" height="20" alt="image" src="upArrow.png" />
-](#CommonModule)
+](#Data-Binding)
 ## If-Else
 - Use *ngIf with else
 ```html
@@ -999,7 +1002,7 @@ export class CounterComponent {
 }
 ```
 [<img width="20" height="20" alt="image" src="upArrow.png" />
-](#CommonModule)
+](#Data-Binding)
 ## For-Loop
 - *ngFor  
 ```html
@@ -1094,4 +1097,4 @@ ngOnDestroy(): void {
 ```
 
 [<img width="20" height="20" alt="image" src="upArrow.png" />
-](#CommonModule)
+](#Data-Binding)
