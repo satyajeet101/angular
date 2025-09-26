@@ -1029,8 +1029,21 @@ trackById(index: number, item: any): number {
 ```
 - Use @for
 ```html
-@for(let item of items; trackBy: trackById; let i = index) {
-  <h2>{{ i + 1 }}. {{ item.name }}</h2>
+@for (user of users; track user) {
+  <div>{{$index}} {{user}}</div>
+  <div>{{$first}} {{user}}</div>
+  <div>{{$last}} {{user}}</div>
+  <div>{{$even}} {{user}}</div>
+  <div>{{$odd}} {{user}}</div>
+  <div>{{$count}} {{user}}</div>
+}
+```
+- In case if users is empty
+```html
+@for (user of users; track user) {
+  <div>{{$index}} {{user}}</div>
+} @empty {
+    <div>No Record found</div>
 }
 ```
 ## Time
