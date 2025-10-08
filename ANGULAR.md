@@ -1,5 +1,5 @@
 # Contents
-[Cheat](#Cheat) | [CommonModule](#CommonModule) | [Pipe](#Pipe) | [Routing](#Routing) | 
+[Parent Child](#Parent-Child) | [CommonModule](#CommonModule) | [Pipe](#Pipe) | [Routing](#Routing) | 
 [Lazy Load](#loadComponent-Vs-loadChildren) | [Service](#Service) | [Dropdown](#Dropdown) | 
 [Search](#Search) | [Standalone-app](#Standalone-app) | [Form-Validation](#Form-Validation) | 
 [CheckBox](#CheckBox-with-for-loop) | [For Loop](#CheckBox-with-for-loop) | [Subscribe Options](#Subscribe-Options) | [Data Binding](#Data-Binding) | [Event Binding](#Event-Binding) | [AOT-JIT](#AOT-JIT) | [AOT-JIT](#AOT-JIT) | [Lifecycle Hooks](#Lifecycle-Hooks)
@@ -7,34 +7,7 @@
 | [Angular Elements](#Angular-Elements) | [Promise vs Observable](#Promise-vs-Observable) | [Signal](#Signal) | [NGRX](#NGRX) | [Performance](#Performance) | 
 [If Else](#If-Else) | [For Loop](#For-Loop) | [Time](#Time)
 
-## Cheat
-### Form validation
-```Typescript
-userForm!: FormGroup;
-constructor(private fb: FormBuilder) {}
-ngOnInit(): void {
-    this.userForm = this.fb.group({
-        username: ['', [Validators.required, Validators.minLength(3)]],
-    });
-}
-onSubmit() {
-    if (this.userForm.valid) {
-        const newUser: User = this.userForm.value;
-    }
-}
-```
-```html
-<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label>Username:</label>
-    <input type="text" formControlName="username" />
-    <div *ngIf="userForm.get('username')?.invalid && userForm.get('username')?.touched" class="error">
-      <small *ngIf="userForm.get('username')?.errors?.['required']">Username is required.</small>
-    </div>
-  </div>
-  <button type="submit" [disabled]="userForm.invalid">Submit</button>
-```
-### Parent Child
+## Parent-Child
 ```Typescript
 //PARENT
 handleChildMessage(msg: string) {
