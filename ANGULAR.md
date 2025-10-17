@@ -32,12 +32,13 @@ handleChildMessage(msg: string) {
 ### Dropdown
 ```html
 <select [(ngModel)]="selectedType" (change)="fetchData()">
-  <option value="users">User</option>
-  <option value="posts">Post </option>
+  <option value="" disabled selected>Select a type</option> <!--If you want to display an option to inform users and it will not be selectable once any option is chosen-->
+  <option value="users">Option 1</option>
+  <option value="posts">Option 2 </option>
 </select>
 ```
 ```Typescript
-selectedType: string = 'users';
+selectedType: string = 'users'; // UI will load with Option 1 as display, as it is initilized with users value
 ```
 ### Search
 ```html
