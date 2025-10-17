@@ -63,8 +63,7 @@ ngOnInit(): void {
     }
   }
 ```
-[<img width="20" height="20" alt="image" src="upArrow.png" />
-](#Data-Binding)
+[<img width="20" height="20" alt="image" src="upArrow.png" />](#Data-Binding)
 ## Data-Binding
 ### Two way Binding
 ```html
@@ -552,7 +551,9 @@ observable.pipe(debounceTime(300)).subscribe(...)
 | **switchMap**     | On latest value         | Cancel old requests, get latest | ❌ No           |
 | **concatMap**     | Sequentially            | Ordered API calls               | ✅ Yes          |
 | **exhaustMap**    | After current completes | Avoid duplicate API calls       | ✅ Yes          |
-<img width="20" height="20" alt="image" src="upArrow.png" />
+
+[<img width="20" height="20" alt="image" src="upArrow.png" />
+](#Data-Binding)
 
 ## HTTP-INTERCEPTOR
 1. How to Create an HTTP Interceptor
