@@ -1081,6 +1081,37 @@ ngOnDestroy(): void {
   }
 }
 ```
+- Take()
+  ```Typescript
+  ngOnInit(): void {
+    interval(1000)
+      .pipe(
+        take(5),
+        switchMap(() => this.service.getUsers())
+      )
+      .subscribe({
+        next: (res) => (this.users = res),
+      });
+  }
+    ```
+- TakeUntil()
+  ```Typescript
+    sub = new Subject<void>();
+  ngOnInit(): void {
+    interval(1000)
+      .pipe(
+        takeUntil(this.sub),
+        switchMap(() => this.service.getUsers())
+      )
+      .subscribe({
+        next: (res) => (this.users = res),
+      });
+  }
 
+  ngOnDestroy(): void {
+    this.sub.next();
+    this.sub.complete();
+  }
+  ```
 [<img width="20" height="20" alt="image" src="upArrow.png" />
 ](#Data-Binding)
