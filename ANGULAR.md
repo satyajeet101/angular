@@ -1111,6 +1111,7 @@ ngOnDestroy(): void {
   ngOnDestroy(): void {
     this.sub.next();
     this.sub.complete();
+    this.sub.unsubscribe()
   }
   ```
 [<img width="20" height="20" alt="image" src="upArrow.png" />
