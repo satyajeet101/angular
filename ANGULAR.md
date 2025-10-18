@@ -32,38 +32,15 @@ handleChildMessage(msg: string) {
 ### Dropdown
 ```html
 <select [(ngModel)]="selectedType" (change)="fetchData()">
-  <option value="users">User</option>
-  <option value="posts">Post </option>
+  <option value="" disabled selected>Select a type</option> <!--If you want to display an option to inform users and it will not be selectable once any option is chosen-->
+  <option value="users">Option 1</option>
+  <option value="posts">Option 2 </option>
 </select>
 ```
 ```Typescript
-selectedType: string = 'users';
+selectedType: string = 'users'; // UI will load with Option 1 as display, as it is initilized with users value
 ```
-### Search
-```html
-<input placeholder="Enter search text...." [formControl]="searchControl">
-```
-```Typescript
-searchControl = new FormControl('');
-ngOnInit(): void {
-    this.searchControl.valueChanges
-      .pipe(debounceTime(500))
-      .subscribe((searchText) => {
-        this.filteredUser(searchText || '');
-      });
-  }
-    filteredUser(searchText: string) {
-    if (!searchText.trim()) {
-      this.filteredUsers = this.users;
-    } else {
-      this.filteredUsers = this.users.filter((u) =>
-        u.username.toLowerCase().includes(searchText.toLowerCase())
-      );
-    }
-  }
-```
-[<img width="20" height="20" alt="image" src="upArrow.png" />
-](#Data-Binding)
+
 ## Data-Binding
 ### Two way Binding
 ```html
@@ -551,8 +528,10 @@ observable.pipe(debounceTime(300)).subscribe(...)
 | **switchMap**     | On latest value         | Cancel old requests, get latest | ❌ No           |
 | **concatMap**     | Sequentially            | Ordered API calls               | ✅ Yes          |
 | **exhaustMap**    | After current completes | Avoid duplicate API calls       | ✅ Yes          |
+
 [<img width="20" height="20" alt="image" src="upArrow.png" />
 ](#Data-Binding)
+
 ## HTTP-INTERCEPTOR
 1. How to Create an HTTP Interceptor
 - ng generate interceptor auth
@@ -1081,6 +1060,38 @@ ngOnDestroy(): void {
   }
 }
 ```
+- Take()
+  ```Typescript
+  ngOnInit(): void {
+    interval(1000)
+      .pipe(
+        take(5),
+        switchMap(() => this.service.getUsers())
+      )
+      .subscribe({
+        next: (res) => (this.users = res),
+      });
+  }
+    ```
+- TakeUntil()
+  ```Typescript
+    sub = new Subject<void>();
+  ngOnInit(): void {
+    interval(1000)
+      .pipe(
+        takeUntil(this.sub),
+        switchMap(() => this.service.getUsers())
+      )
+      .subscribe({
+        next: (res) => (this.users = res),
+      });
+  }
 
+  ngOnDestroy(): void {
+    this.sub.next();
+    this.sub.complete();
+    this.sub.unsubscribe()
+  }
+  ```
 [<img width="20" height="20" alt="image" src="upArrow.png" />
 ](#Data-Binding)
