@@ -40,30 +40,7 @@ handleChildMessage(msg: string) {
 ```Typescript
 selectedType: string = 'users'; // UI will load with Option 1 as display, as it is initilized with users value
 ```
-### Search
-```html
-<input placeholder="Enter search text...." [formControl]="searchControl">
-```
-```Typescript
-searchControl = new FormControl('');
-ngOnInit(): void {
-    this.searchControl.valueChanges
-      .pipe(debounceTime(500))
-      .subscribe((searchText) => {
-        this.filteredUser(searchText || '');
-      });
-  }
-    filteredUser(searchText: string) {
-    if (!searchText.trim()) {
-      this.filteredUsers = this.users;
-    } else {
-      this.filteredUsers = this.users.filter((u) =>
-        u.username.toLowerCase().includes(searchText.toLowerCase())
-      );
-    }
-  }
-```
-[<img width="20" height="20" alt="image" src="upArrow.png" />](#Data-Binding)
+
 ## Data-Binding
 ### Two way Binding
 ```html
