@@ -484,7 +484,7 @@ ngOnInit(): void {
      });
 }
 ```
-### Generic example
+### Generic example 
 ```Typescript
 this.http.get('https://jsonplaceholder.typicode.com/posts')
   .pipe(
