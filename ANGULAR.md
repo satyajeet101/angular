@@ -9,7 +9,7 @@
 
 ## Parent-Child
 ```Typescript
-//PARENT
+ //PARENT
 handleChildMessage(msg: string) {
     alert('Child says: ' + msg);
 }
