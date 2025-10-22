@@ -340,7 +340,11 @@ export class UserComponent implements OnInit{
   }
   submitUser(){
     if(this.userForm.valid){
-      this.users = this.userForm.value;
+     this.users.push({
+        name: this.userForm.value.userName,
+        email: this.userForm.value.userEmail,
+        id: 0,
+      });
       this.userForm.reset();
     }
   }
