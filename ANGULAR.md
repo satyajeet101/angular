@@ -145,6 +145,16 @@ ngOnChanges(changes: SimpleChanges): void {
 7. ngAfterViewChecked, It is called after ngAfterViewInit and every subsequent ngAfterContentChecked. It is used to act upon any changes after the view has been checked.
 8. ngOnDestroy, It is called immediately before Angular destroys the component. It is used to clean up any resources, such as subscriptions and event handlers, to avoid memory leaks.
 
+## loadComponent-Vs-loadChildren
+1. loadChildren, old style
+    - Module level
+    - Only if using feature modules
+2. loadComponent
+    - For standalone component
+    - Component level
+    - Recommended for 14+
+    - Faster
+    - add <router-outlet> in app.component.html — otherwise, lazy-loaded components won’t display.
 ## Routing
 ```typescript
 const routes: Routes = [
@@ -184,16 +194,6 @@ this.userId = this.route.snapshot.paramMap.get('id')!;
   <a [routerLink]="['/user', i]">{{user.name}}</a>
 </p>
 ```
-## loadComponent-Vs-loadChildren
-1. loadChildren, old style
-    - Module level
-    - Only if using feature modules
-2. loadComponent
-    - For standalone component
-    - Component level
-    - Recommended for 14+
-    - Faster
-    - add <router-outlet> in app.component.html — otherwise, lazy-loaded components won’t display.
 ## CommonModule
 - CommonModule provides Angular's most commonly used directives and pipes.
 - You don’t import it in AppModule because BrowserModule already includes it.
