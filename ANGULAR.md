@@ -2,7 +2,8 @@
 [Parent Child](#Parent-Child) | [CommonModule](#CommonModule) | [Pipe](#Pipe) | [Routing](#Routing) | 
 [Lazy Load](#loadComponent-Vs-loadChildren) | [Service](#Service) | [Dropdown](#Dropdown) | 
 [Search](#Search) | [Standalone-app](#Standalone-app) | [Form-Validation](#Form-Validation) | 
-[CheckBox](#CheckBox-with-for-loop) | [For Loop](#CheckBox-with-for-loop) | [Subscribe Options](#Subscribe-Options) | [Data Binding](#Data-Binding) | [Event Binding](#Event-Binding) | [AOT-JIT](#AOT-JIT) | [AOT-JIT](#AOT-JIT) | [Lifecycle Hooks](#Lifecycle-Hooks)
+[CheckBox](#CheckBox-with-for-loop) | [For Loop](#CheckBox-with-for-loop) | [Subscribe Options](#Subscribe-Options) | [Data Binding](#Data-Binding) | [Event Binding](#Event-Binding) | [AOT-JIT](#AOT-JIT) | [Change Detection Strategy](#Change-Detection-Strategy) | 
+[Directives](#Directives) | [Lifecycle Hooks](#Lifecycle-Hooks)
 | [HTTP INTERCEPTOR](#HTTP-INTERCEPTOR) | [Route Guard](#Route-Guard) | [Ivy](#Ivy)
 | [Angular Elements](#Angular-Elements) | [Promise vs Observable](#Promise-vs-Observable) | [Signal](#Signal) | [NGRX](#NGRX) | [Performance](#Performance) | 
 [If Else](#If-Else) | [For Loop](#For-Loop) | [Time](#Time)
@@ -113,7 +114,35 @@ HTML and TypeScript code into efficient JavaScript code.
            }
         }
 ```
-## Directives 
+## Change-Detection-Strategy
+- In Angular, change detection is the process of tracking changes to data and updating the view accordingly. Angular provides different change detection strategies to optimize performance.
+  - Default: Checks the entire component tree for changes.
+  - OnPush: Checks only when input properties change or events occur.
+
+```Typescript
+  @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush,
+  })
+```
+- There are diffrent methods to trigger change detection manually:
+  - markForCheck: Marks the component and its ancestors as needing check.
+  - detectChanges: Checks the component and its children for changes.
+  - detach: Detaches the component from the change detection tree.
+  - reattach: Reattaches the component to the change detection tree.
+  ```Typescript
+      import { ChangeDetectorRef } from '@angular/core';
+
+      constructor(private cdr: ChangeDetectorRef) {}
+
+      someMethod() {
+        this.cdr.markForCheck();
+        this.cdr.detectChanges();
+        this.cdr.detach();
+        this.cdr.reattach();
+      }
+  ```
+- Angular uses NgZone to intercept async operations (like setTimeout, HTTP calls) and trigger change detection automatically.
+## Directives
 - Are special markers on a DOM element that tell Angular to do something to that DOM element or its children. Directives are used to
 extend HTML functionality by adding behavior to elements, such as manipulating their attributes or styling.
   - ngModel: 	It is used to bind to the HTML controls 
@@ -864,16 +893,7 @@ export class CounterComponent {
 ### Register effect
 ## Performance
 1. Change Detection Optimization
-    - Use ChangeDetectionStrategy.OnPush, i.e. to check the change only if
-       - When an @Input() reference changes.
-       - When an event inside the component occurs (e.g., button click).
-       - When a signal or observable emits and updates the view.
-    ```Typescript
-      @Component({
-      changeDetection: ChangeDetectionStrategy.OnPush
-      // tells Angular to check for changes only when inputs change or events occur
-    })
-    ```
+    - Use ChangeDetectionStrategy.OnPush
     - Avoid unnecessary bindings in templates that trigger change detection.
 2. Lazy Loading Modules
 3. Use Standalone Components
