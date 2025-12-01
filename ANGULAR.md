@@ -1152,7 +1152,8 @@ ngOnDestroy(): void {
           multi: true
         }
       ]
-    });```
+    });
+  ```
 
 - **provide: APP_INITIALIZER:**
     - is a special Angular injection token.
