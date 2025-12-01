@@ -6,7 +6,7 @@
 [Directives](#Directives) | [Lifecycle Hooks](#Lifecycle-Hooks)
 | [HTTP INTERCEPTOR](#HTTP-INTERCEPTOR) | [Route Guard](#Route-Guard) | [Ivy](#Ivy)
 | [Angular Elements](#Angular-Elements) | [Promise vs Observable](#Promise-vs-Observable) | [Signal](#Signal) | [NGRX](#NGRX) | [Performance](#Performance) | 
-[If Else](#If-Else) | [For Loop](#For-Loop) | [Time](#Time) | [App Initializer](App-Initializer)
+[If Else](#If-Else) | [For Loop](#For-Loop) | [Time](#Time) | [App Initializer](#App-Initializer)
 
 ## Parent-Child
 ```Typescript
