@@ -6,7 +6,7 @@
 [Directives](#Directives) | [Lifecycle Hooks](#Lifecycle-Hooks)
 | [HTTP INTERCEPTOR](#HTTP-INTERCEPTOR) | [Route Guard](#Route-Guard) | [Ivy](#Ivy)
 | [Angular Elements](#Angular-Elements) | [Promise vs Observable](#Promise-vs-Observable) | [Signal](#Signal) | [NGRX](#NGRX) | [Performance](#Performance) | 
-[If Else](#If-Else) | [For Loop](#For-Loop) | [Time](#Time)
+[If Else](#If-Else) | [For Loop](#For-Loop) | [Time](#Time) | [APP INITIALIZER](APP-INITIALIZER)
 
 ## Parent-Child
 ```Typescript
@@ -1119,3 +1119,54 @@ ngOnDestroy(): void {
   ```
 [<img width="20" height="20" alt="image" src="upArrow.png" />
 ](#Data-Binding)
+
+## APP-INITIALIZER
+- App Initializer is a special mechanism that allows you to run custom logic before the application is fully initialized. It’s commonly used for tasks that must complete before the app starts rendering, such as:
+
+- Purpose of App Initializer
+  - Load configuration data from a server (e.g., API base URLs, feature flags).
+  - Initialize services that depend on external resources.
+  - Perform authentication checks or token refresh.
+  - Set up global state before components are created.
+  ```Typescript
+    import { bootstrapApplication } from '@angular/platform-browser';
+    import { provideHttpClient, HttpClient } from '@angular/common/http';
+    import { APP_INITIALIZER } from '@angular/core';
+    import { AppComponent } from './app/app.component';
+    
+    function loadConfig(http: HttpClient) {
+      return () => http.get('/assets/config.json').toPromise()
+        .then(config => {
+          console.log('Config loaded:', config);
+          // Store config in a global service or variable
+        });
+    }
+    
+    bootstrapApplication(AppComponent, {
+      providers: [
+        provideHttpClient(),
+        {
+          provide: APP_INITIALIZER,
+          useFactory: loadConfig,
+          deps: [HttpClient],
+          multi: true
+        }
+      ]
+    });```
+
+- **provide: APP_INITIALIZER:**
+    - is a special Angular injection token.
+    - Angular looks for all providers registered under this token and executes them before the app bootstraps.
+    - It expects a function that returns either: void, or a Promise (or Observable) that resolves when initialization is          complete.
+-  **useFactory: loadConfig:**
+    -  useFactory tells Angular to call this factory function to create the initializer.
+    - Here, loadConfig is a function that returns another function (closure) which Angular will execute during app initialization.
+    - That inner function returns a Promise (from http.get(...).toPromise()), so Angular waits until the promise resolves before continuing.
+- **deps: [HttpClient]**
+    - deps specifies the dependencies that Angular should inject into the factory function.
+    - In this case, Angular will inject an instance of HttpClient when calling loadConfig.
+    - This allows the initializer to make HTTP calls (e.g., load config from /assets/config.json).
+- **multi: true**
+    - This means multiple providers can use the same token (APP_INITIALIZER).
+    - Angular will collect all initializers and run them in parallel.
+    - If any initializer returns a Promise, Angular waits for all promises to resolve before bootstrapping the app.
