@@ -6,7 +6,7 @@
 [Directives](#Directives) | [Lifecycle Hooks](#Lifecycle-Hooks)
 | [HTTP INTERCEPTOR](#HTTP-INTERCEPTOR) | [Route Guard](#Route-Guard) | [Ivy](#Ivy)
 | [Angular Elements](#Angular-Elements) | [Promise vs Observable](#Promise-vs-Observable) | [Signal](#Signal) | [NGRX](#NGRX) | [Performance](#Performance) | 
-[If Else](#If-Else) | [For Loop](#For-Loop) | [Time](#Time) | [APP INITIALIZER](APP-INITIALIZER)
+[If Else](#If-Else) | [For Loop](#For-Loop) | [Time](#Time) | [App Initializer](App-Initializer)
 
 ## Parent-Child
 ```Typescript
@@ -1120,7 +1120,7 @@ ngOnDestroy(): void {
 [<img width="20" height="20" alt="image" src="upArrow.png" />
 ](#Data-Binding)
 
-## APP-INITIALIZER
+## App-Initializer
 - App Initializer is a special mechanism that allows you to run custom logic before the application is fully initialized. It’s commonly used for tasks that must complete before the app starts rendering, such as:
 
 - Purpose of App Initializer
