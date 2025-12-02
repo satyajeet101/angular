@@ -1,10 +1,10 @@
 # Contents
 [Parent Child](#Parent-Child) | [CommonModule](#CommonModule) | [Pipe](#Pipe) | [Routing](#Routing) | 
-[Lazy Load](#loadComponent-Vs-loadChildren) | [Service](#Service) | [Dropdown](#Dropdown) | 
-[Search](#Search) | [Standalone-app](#Standalone-app) | [Form-Validation](#Form-Validation) | 
+[Service](#Service) | [Dropdown](#Dropdown) | 
+[Search](#Search) | [Form-Validation](#Form-Validation) | 
 [CheckBox](#CheckBox-with-for-loop) | [For Loop](#CheckBox-with-for-loop) | [Subscribe Options](#Subscribe-Options) | [Data Binding](#Data-Binding) | [Event Binding](#Event-Binding) | [AOT-JIT](#AOT-JIT) | [Change Detection Strategy](#Change-Detection-Strategy) | 
 [Directives](#Directives) | [Lifecycle Hooks](#Lifecycle-Hooks)
-| [HTTP INTERCEPTOR](#HTTP-INTERCEPTOR) | [Route Guard](#Route-Guard) | [Ivy](#Ivy)
+| [HTTP INTERCEPTOR](#HTTP-INTERCEPTOR) [Ivy](#Ivy)
 | [Angular Elements](#Angular-Elements) | [Promise vs Observable](#Promise-vs-Observable) | [Signal](#Signal) | [NGRX](#NGRX) | [Performance](#Performance) | 
 [If Else](#If-Else) | [For Loop](#For-Loop) | [Time](#Time) | [App Initializer](#App-Initializer)
 
@@ -174,54 +174,114 @@ ngOnChanges(changes: SimpleChanges): void {
 7. ngAfterViewChecked, It is called after ngAfterViewInit and every subsequent ngAfterContentChecked. It is used to act upon any changes after the view has been checked.
 8. ngOnDestroy, It is called immediately before Angular destroys the component. It is used to clean up any resources, such as subscriptions and event handlers, to avoid memory leaks.
 
-## loadComponent-Vs-loadChildren
-1. loadChildren, old style
-    - Module level
-    - Only if using feature modules
-2. loadComponent
-    - For standalone component
-    - Component level
-    - Recommended for 14+
-    - Faster
-    - add <router-outlet> in app.component.html — otherwise, lazy-loaded components won’t display.
 ## Routing
-```typescript
-const routes: Routes = [
-    { path: 'home', component: HomeComponent },
-    { path: '', redirectTo: '/home', pathMatch: 'full' }, // Redirect empty path
-    { path: '**', component: PageNotFoundComponent }, // Wildcard route for 404
-    {
-      path: 'my-page',
-      loadChildren: () =>
-         import('./my-input/my-input.component').then(m => m.MyInputComponent)
-   }
-   { path: 'user/:id', component: UserDetailComponent } //Dynamic angular routing
-];
-
-@NgModule({
-    imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule]
-})
-```
-### Sample to dynamic routing 
+- Quick Summary 
+  - RouterOutlet → placeholder for routed components.
+  - RouterLink → navigation without reload.
+  - ActivatedRoute → access params & data.
+  - Guards → control access.
+  - Resolvers → preload data.
+  - Lazy Loading → optimize performance.
+  
+### Basic Routing Setup
 ```Typescript
-import { Router } from '@angular/router';
-constructor(private router: Router) {}
-goToUser(id: number, event: Event) {
-  event.preventDefault(); // HTML is like  => <a href="#" (click)="userDetails(i, $event)">{{user.name}}</a>
-  this.router.navigate(['/user', id]);
-}
-
-import { ActivatedRoute } from '@angular/router';
-constructor(private route: ActivatedRoute) {}
-this.userId = this.route.snapshot.paramMap.get('id')!;
+    import { Routes } from '@angular/router';
+    import { HomeComponent } from './home.component';
+    import { AboutComponent } from './about.component';
+    import { PageNotFoundComponent } from './page-not-found.component';
+    
+    export const routes: Routes = [
+      { path: '', component: HomeComponent }, // Redirect empty path
+      { path: 'about', component: AboutComponent },
+      { path: '**', component: PageNotFoundComponent } // Wildcard for 404
+      {
+        path: 'my-page',
+        loadComponent: () =>
+           import('./my-input/my-input.component').then(m => m.MyInputComponent) //  Lazy Loading, use loadChildren for modules
+       }
+       { path: 'user/:id', component: UserDetailComponent } //Route Parameters & Query Params
+       { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] }// Route Guards
+           //CanActivate: Determines if a route can be activated.
+           //CanDeactivate: Checks if a route can be deactivated.
+           //CanLoad: Determines if a module can be loaded lazily.
+       { path: 'settings', component: SettingsComponent, resolve: { config: ConfigResolver } } // Resolver
+    ];
 ```
-### OR directly handle the navigation in html
+### Bootstrap in Standalone App
+```Typescript
+    import { bootstrapApplication } from '@angular/platform-browser';
+    import { provideRouter } from '@angular/router';
+    import { AppComponent } from './app.component';
+    import { routes } from './app.routes';
+    
+    bootstrapApplication(AppComponent, {
+      providers: [provideRouter(routes)]
+    });
+```
+### RouterOutlet & RouterLink
 ```html
-<p *ngFor="let user of users; let i = index">
-  {{i}} : 
-  <a [routerLink]="['/user', i]">{{user.name}}</a>
-</p>
+    <nav>
+      <a routerLink="/">Home</a>
+      <a routerLink="/about">About</a>
+    </nav>
+    <router-outlet></router-outlet>
+```
+#### Access in component for Route Parameters
+```Typescript
+    constructor(private route: ActivatedRoute) {
+      const id = this.route.snapshot.paramMap.get('id');
+    }
+```
+### Route Guards
+
+```Typescript
+    import { Injectable } from '@angular/core';
+    import { CanActivate, Router } from '@angular/router';
+    
+    @Injectable({ providedIn: 'root' })
+    export class AuthGuard implements CanActivate {
+      constructor(private router: Router) {}
+    
+      canActivate(): boolean {
+        const isLoggedIn = !!localStorage.getItem('token');
+        if (!isLoggedIn) {
+          this.router.navigate(['/login']);
+          return false;
+        }
+        return true;
+      }
+    }
+```
+### Resolver
+```Typescript
+    import { Injectable } from '@angular/core';
+    import { Resolve } from '@angular/router';
+    import { HttpClient } from '@angular/common/http';
+    import { Observable } from 'rxjs';
+    
+    @Injectable({ providedIn: 'root' })
+    export class ConfigResolver implements Resolve<any> {
+      constructor(private http: HttpClient) {}
+      resolve(): Observable<any> {
+        return this.http.get('/assets/config.json');
+      }
+    }
+```
+#### Access in component:
+```Typescript
+    constructor(private route: ActivatedRoute) {
+      console.log(this.route.snapshot.data['config']);
+    }
+```
+### Programmatic Navigation
+```Typescript
+    import { Router } from '@angular/router';
+    
+    constructor(private router: Router) {}
+    
+    navigateToAbout() {
+      this.router.navigate(['/about']);
+    }
 ```
 ## CommonModule
 - CommonModule provides Angular's most commonly used directives and pipes.
@@ -381,43 +441,7 @@ export class UserComponent implements OnInit{
 ```
 [<img width="20" height="20" alt="image" src="upArrow.png" />
 ](#Data-Binding)
-## Standalone-app
 
-### How to add routing module
-1. Create app-route.ts
-```Typescript
-import { Routes } from '@angular/router';
-import { HomeComponent } from './app/home-component/home-component';
-export const routes: Routes = [
-  {
-    path: '',
-    component: HomeComponent
-  }
-]
-```
-2. In main.ts
-```Typescript
-import { provideRouter, RouterOutlet } from '@angular/router';
-@Component({
-  selector: 'app-root',
-  standalone: true, //✅ This one is NEEDED
-  imports:[RouterOutlet], //✅ This one is NEEDED
-  templateUrl: './app-component.html', //✅ This one is NEEDED
-})
-export class App {
-  name = 'Angular';
-}
-bootstrapApplication(App, {
-  providers: [
-  provideRouter(routes), //✅ This one is for router
-  provideHttpClient(
-      withInterceptors([//✅ This one will be added only if we need httpinterceptor
-        (req, next) => new AuthInterceptor().intercept(req, next)
-      ])
-    ) //✅ This one is for Http
-  ], 
-}); 
-```
 ## CheckBox-with-for-loop
 ```html
 <div *ngFor="let toDo of toDos; let i = index">
@@ -604,41 +628,6 @@ import { AuthInterceptor } from './auth.interceptor';
 })
 export class AppModule {}
 ```
-[<img width="20" height="20" alt="image" src="upArrow.png" />
-](#Data-Binding)
-## Route-Guard
-- ng generate guard auth
-```Typescript
-import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
-
-@Injectable({
-  providedIn: 'root' // This makes it a singleton service
-})
-export class AuthGuard implements CanActivate {
-  constructor(private router: Router) {}
-  canActivate(): boolean {
-    const token = localStorage.getItem('token'); // Example check
-
-    if (!token) {
-      this.router.navigate(['/login']);
-      return false;
-    }
-
-    return true;
-  }
-}
-
-//✅ In route module
-  {
-    path: 'dashboard',
-    component: DashboardComponent,
-    canActivate: [AuthGuard]
-  }
-```
-- CanActivate: Determines if a route can be activated. 
-- CanDeactivate: Checks if a route can be deactivated. 
-- CanLoad: Determines if a module can be loaded lazily.
 [<img width="20" height="20" alt="image" src="upArrow.png" />
 ](#Data-Binding)
 ## Ivy
@@ -1124,10 +1113,10 @@ ngOnDestroy(): void {
 - App Initializer is a special mechanism that allows you to run custom logic before the application is fully initialized. It’s commonly used for tasks that must complete before the app starts rendering, such as:
 
 - Purpose of App Initializer
-  - Load configuration data from a server (e.g., API base URLs, feature flags).
-  - Initialize services that depend on external resources.
-  - Perform authentication checks or token refresh.
-  - Set up global state before components are created.
+    - Load configuration data from a server (e.g., API base URLs, feature flags).
+    - Initialize services that depend on external resources.
+    - Perform authentication checks or token refresh.
+    - Set up global state before components are created.
   ```Typescript
     import { bootstrapApplication } from '@angular/platform-browser';
     import { provideHttpClient, HttpClient } from '@angular/common/http';
