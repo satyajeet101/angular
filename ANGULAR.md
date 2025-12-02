@@ -15,7 +15,8 @@ handleChildMessage(msg: string) {
     alert('Child says: ' + msg);
 }
 //CHILD
-  @Input() user!: User; // Parent → Child
+// Mandatory input or else we can leave it blank
+  @Input({ required: true }) user!: User; // Parent → Child
   @Output() notifyParent = new EventEmitter(); // Child → Parent
   sendMessageToParent() {
     this.notifyParent.emit(
