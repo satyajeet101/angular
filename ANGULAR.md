@@ -4,7 +4,7 @@
 [Search](#Search) | [Form-Validation](#Form-Validation) | 
 [CheckBox](#CheckBox-with-for-loop) | [For Loop](#CheckBox-with-for-loop) | [Subscribe Options](#Subscribe-Options) | [Data Binding](#Data-Binding) | [Event Binding](#Event-Binding) | [AOT-JIT](#AOT-JIT) | [Change Detection Strategy](#Change-Detection-Strategy) | 
 [Directives](#Directives) | [Lifecycle Hooks](#Lifecycle-Hooks)
-| [HTTP INTERCEPTOR](#HTTP-INTERCEPTOR) [Ivy](#Ivy)
+| [HTTP INTERCEPTOR](#HTTP-INTERCEPTOR) | [Ivy](#Ivy)
 | [Angular Elements](#Angular-Elements) | [Promise vs Observable](#Promise-vs-Observable) | [Signal](#Signal) | [NGRX](#NGRX) | [Performance](#Performance) | 
 [If Else](#If-Else) | [For Loop](#For-Loop) | [Time](#Time) | [App Initializer](#App-Initializer)
 
