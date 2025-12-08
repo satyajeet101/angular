@@ -6,7 +6,8 @@
 [Directives](#Directives) | [Lifecycle Hooks](#Lifecycle-Hooks)
 | [HTTP INTERCEPTOR](#HTTP-INTERCEPTOR) | [Ivy](#Ivy)
 | [Angular Elements](#Angular-Elements) | [Promise vs Observable](#Promise-vs-Observable) | [Signal](#Signal) | [NGRX](#NGRX) | [Performance](#Performance) | 
-[If Else](#If-Else) | [For Loop](#For-Loop) | [Time](#Time) | [App Initializer](#App-Initializer)
+[If Else](#If-Else) | [For Loop](#For-Loop) | [Time](#Time) | [App Initializer](#App-Initializer) | 
+[Semantic HTML guide for Angular templates](#Semantic-HTML-guide-for-Angular-templates)
 
 ## Parent-Child
 ```Typescript
@@ -1161,3 +1162,63 @@ ngOnDestroy(): void {
     - This means multiple providers can use the same token (APP_INITIALIZER).
     - Angular will collect all initializers and run them in parallel.
     - If any initializer returns a Promise, Angular waits for all promises to resolve before bootstrapping the app.
+## Semantic-HTML-guide-for-Angular-templates
+- Why use these tags in Angular?
+    - Improves SEO: Search engines understand page structure better.
+    - Enhances Accessibility: Screen readers can navigate by landmarks.
+    - Makes templates clean and maintainable.
+- <main>
+    - Represents the main content of the page (unique, primary content).
+    - Use when: Wrapping the core content of your app (excluding headers, footers, nav).
+    - Only one <main> per page.
+```Typescript
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+```
+- <section>
+    - Groups related content into a thematic block.
+    - Use when: You have a distinct section like product listing, blog posts, or a dashboard widget.
+    - Include a heading (<h2> or <h3>) inside for better semantics.
+```Typescript
+    <section *ngIf="products$ | async as products">
+      <h2>Products</h2>
+      <app-product *ngFor="let p of products" [product]="p"></app-product>
+    </section>
+ ```
+- <article>
+    - Represents a self-contained piece of content that could stand alone (e.g., blog post, news item, product card).
+    - Use when: Each item is independent and shareable.
+    - Great for reusable components like ProductComponent.
+ ```Typescript
+    <article *ngFor="let p of products">
+      <h3>{{ p.name }}</h3>
+      <p>{{ p.description }}</p>
+    </article>
+ ```
+- <aside>
+    - Represents content indirectly related to the main content (sidebar, ads, related links).
+    - Use when: Showing filters, recommendations, or extra info.
+    - Often used in layouts with <main>.
+ ```Typescript
+    <aside>
+      <app-filters></app-filters>
+      <app-recommendations></app-recommendations>
+    </aside>
+ ```
+
+# Angular Template Decision Chart
+
+| **Scenario** | **Use** | **Why** | **Example** |
+|--------------|---------|---------|-------------|
+| Need a wrapper **only for styling/layout** (CSS classes, flex/grid) | `<div>` | Generic container, no semantic meaning | ```html<br><div class="product-grid"><br>  <app-product *ngFor="let p of products" [product]="p"></app-product><br></div><br>``` |
+| Apply `*ngIf` / `*ngFor` to **multiple sibling elements** without adding extra DOM | `<ng-container>` | Doesn’t render in DOM, keeps layout clean | ```html<br><ng-container *ngIf="products?.length; else empty"><br>  <app-product *ngFor="let p of products" [product]="p"></app-product><br></ng-container><br>``` |
+| Group content that forms a **distinct section of the page** (e.g., product listing, dashboard block) | `<section>` | Semantic element, improves SEO & accessibility | ```html<br><section><br>  <h2>Featured Products</h2><br>  <app-product *ngFor="let p of products" [product]="p"></app-product><br></section><br>``` |
+| Represent a **self-contained item** that could stand alone (e.g., blog post, product card) | `<article>` | Semantic element for independent content | ```html<br><article><br>  <h3>{{ product.name }}</h3><br>  <p>{{ product.description }}</p><br></article><br>``` |
+| Define a **template block for later use** (e.g., `else` in `*ngIf`, reusable fragments, dynamic rendering) | `<ng-template>` | Creates a deferred template, not rendered until referenced | ```html<br><ng-template #empty><br>  <p>No products found.</p><br></ng-template><br>``` |
+
+    
+    
+
+    
+
