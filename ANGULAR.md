@@ -1209,13 +1209,13 @@ ngOnDestroy(): void {
 
 # Angular Template Decision Chart
 
-| **Scenario** | **Use** | **Why** | **Example** |
-|--------------|---------|---------|-------------|
-| Need a wrapper **only for styling/layout** (CSS classes, flex/grid) | `<div>` | Generic container, no semantic meaning | ```html <br><div class="product-grid"><br>  <app-product *ngFor="let p of products" [product]="p"></app-product><br></div><br>``` |
-| Apply `*ngIf` / `*ngFor` to **multiple sibling elements** without adding extra DOM | `<ng-container>` | Doesn’t render in DOM, keeps layout clean | ```html <br><ng-container *ngIf="products?.length; else empty"><br>  <app-product *ngFor="let p of products" [product]="p"></app-product><br></ng-container><br>``` |
-| Group content that forms a **distinct section of the page** (e.g., product listing, dashboard block) | `<section>` | Semantic element, improves SEO & accessibility | ```html <br><section><br>  <h2>Featured Products</h2><br>  <app-product *ngFor="let p of products" [product]="p"></app-product><br></section><br>``` |
-| Represent a **self-contained item** that could stand alone (e.g., blog post, product card) | `<article>` | Semantic element for independent content | ```html <br><article><br>  <h3>{{ product.name }}</h3><br>  <p>{{ product.description }}</p><br></article><br>``` |
-| Define a **template block for later use** (e.g., `else` in `*ngIf`, reusable fragments, dynamic rendering) | `<ng-template>` | Creates a deferred template, not rendered until referenced | ```html <br><ng-template #empty><br>  <p>No products found.</p><br></ng-template><br>``` |
+| **Scenario**                                                                                               | **Use**          | **Why**                                                    | **Example**                                                                                                                                                        |
+|------------------------------------------------------------------------------------------------------------|------------------|------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Need a wrapper **only for styling/layout** (CSS classes, flex/grid)                                        | `<div>`          | Generic container, no semantic meaning                     | ```html <br><div class="product-grid"><br>  <app-product *ngFor="let p of products" [product]="p"></app-product><br></div><br>```                                  |
+| Apply `*ngIf` / `*ngFor` to **multiple sibling elements** without adding extra DOM                         | `<ng-container>` | Doesn’t render in DOM, keeps layout clean                  | ```html <br><ng-container *ngIf="products?.length; else empty"><br>  <app-product *ngFor="let p of products" [product]="p"></app-product><br></ng-container><br>``` |
+| Group content that forms a **distinct section of the page** (e.g., product listing, dashboard block)       | `<section>`      | Semantic element, improves SEO & accessibility             | ```html <br><section><br>  <h2>Featured Products</h2><br>  <app-product *ngFor="let p of products" [product]="p"></app-product><br></section><br>```               |
+| Represent a **self-contained item** that could stand alone (e.g., blog post, product card)                 | `<article>`      | Semantic element for independent content                   | ```html <br><article><br>  <h3>{{ product.name }}</h3><br>  <p>{{ product.description }}</p><br></article><br>```                                                  |
+| Define a **template block for later use** (e.g., `else` in `*ngIf`, reusable fragments, dynamic rendering) | `<ng-template>`  | Creates a deferred template, not rendered until referenced | ```html <br><ng-template #empty><br>  <p>No products found.</p><br></ng-template><br>```                                                                           |
 
     
     
