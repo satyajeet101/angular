@@ -996,7 +996,7 @@ trackById(index: number, item: any): number {
 ```
 - Use @for
 ```html
-@for (user of users; track user) {
+@for (user of users; track user.id) {
   <div>{{$index}} {{user}}</div>
   <div>{{$first}} {{user}}</div>
   <div>{{$last}} {{user}}</div>
@@ -1004,6 +1004,12 @@ trackById(index: number, item: any): number {
   <div>{{$odd}} {{user}}</div>
   <div>{{$count}} {{user}}</div>
 }
+//OR
+@for (user of users; track trackById(user) {
+}
+  trackById(u: User){
+    return u.id
+  }
 ```
 - In case if users is empty
 ```html
